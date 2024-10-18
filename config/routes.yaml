@@ -1,0 +1,8 @@
+findAll:
+    path: /api/chat
+    methods: GET
+    controller: App\UserInterface\Controller\ChatController
+send:
+    path: /api/send
+    methods: POST
+    controller: App\UserInterface\Controller\SendController

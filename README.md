@@ -51,31 +51,30 @@ Pour installer ce projet, suivez ces étapes :
 
 1. Clonez le dépôt :
    ```bash
-   git clone <url-du-repo>
-   cd <nom-du-repo>
+   git clone git@github.com:arnaud-factoryz/messenger.git
+   cd messenger
    ```
 
-2. Installez les dépendances :
+2. Build & start docker
    ```bash
-   composer install
+   docker compose up -d
+   ```
+3. Installez les dépendances :
+   ```bash
+   docker compose exec php composer install
    ```
 
-3. Configurez votre environnement :
+4. Configurez votre environnement :
   * Renommez .env.example en .env et ajustez les paramètres selon vos besoins.
 
-4. Créez la base de données :
+5. Créez la base de données :
    ```bash
-   php bin/console doctrine:database:create
+   docker compose exec php php bin/console doctrine:database:create
    ```
 
-5. Exécutez les migrations :
+6. Exécutez les migrations :
    ```bash
-   php bin/console doctrine:migrations:migrate
-   ```
-
-6. Lancez le serveur :
-   ```bash
-       php bin/console server:run
+   docker compose exec php php bin/console doctrine:migrations:migrate
    ```
 
 ## License
