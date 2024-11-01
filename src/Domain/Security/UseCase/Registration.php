@@ -29,9 +29,8 @@ class Registration
     public function execute(RegistrationRequest $request, RegistrationPresenterInterface $presenter): void
     {
         $request->validate($this->userGateway);
-        $user = User::fromRegistration($request->getEmail(),
-            $request->getUsername(),
-            $request->getPlainPassword());
+        $user = User::fromRegistration($request);
+        $this->userGateway->register($user);
         $presenter->present(new RegistrationResponse($user));
     }
 
