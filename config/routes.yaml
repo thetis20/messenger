@@ -1,8 +1,10 @@
-findAll:
-    path: /api/chat
+registration:
+    path: /registration
+    methods: GET|POST
+    controller: App\UserInterface\Controller\RegistrationController
+index:
+    path: /
     methods: GET
-    controller: App\UserInterface\Controller\ChatController
-send:
-    path: /api/send
-    methods: POST
-    controller: App\UserInterface\Controller\SendController
+    controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+    defaults: 
+        template: index.html.twig

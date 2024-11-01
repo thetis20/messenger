@@ -1,0 +1,8 @@
+services:
+    App\:
+        resource: '../../../src/'
+        exclude:
+            - '../../../src/DependencyInjection/'
+            - '../../../src/Infrastructure/Entity/'
+            - '../../../src/Infrastructure/Kernel.php'
+            - '../../../src/Infrastructure/Adapter'

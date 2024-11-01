@@ -14,14 +14,14 @@ class Assertion extends BaseAssertion
 
     public static function notExistingEmail(string $email, UserGateway $userGateway): void
     {
-        if (!$userGateway->isUniqueEmail($email)) {
+        if ($userGateway->emailAlreadyExists($email)) {
             throw new AlreadyExistingEmailException("This email should be unique !", self::EXISTING_EMAIL);
         }
     }
 
     public static function notExistingUsername(string $username, UserGateway $userGateway): void
     {
-        if (!$userGateway->isUniqueUsername($username)) {
+        if ($userGateway->usernameAlreadyExists($username)) {
             throw new AlreadyExistingUsernameException("This username should be unique !", self::EXISTING_USERNAME);
         }
     }
