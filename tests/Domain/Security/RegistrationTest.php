@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Security;
+namespace App\Tests\Domain\Security;
 
 use App\Domain\Security\Entity\User;
 use App\Domain\Security\Gateway\UserGateway;
@@ -28,14 +28,14 @@ class RegistrationTest extends TestCase
         };
         $userGateway = new class() implements UserGateway {
 
-            public function isUniqueEmail(string $email): bool
+            public function emailAlreadyExists(?string $email): bool
             {
-                return !in_array($email, ['used@email.com']);
+                return in_array($email, ['used@email.com']);
             }
 
-            public function isUniqueUsername(string $username): bool
+            public function usernameAlreadyExists(?string $username): bool
             {
-                return !in_array($username, ['used-username']);
+                return in_array($username, ['used-username']);
             }
         };
         $this->useCase = new Registration($userGateway);

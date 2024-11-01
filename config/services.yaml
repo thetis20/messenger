@@ -19,6 +19,7 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Infrastructure/Entity/'
             - '../src/Infrastructure/Kernel.php'
+            - '../src/Infrastructure/{Test}'
     App\UserInterface\Controller\:
         resource: '../src/UserInterface/Controller'
         tags: ['controller.service_arguments']
