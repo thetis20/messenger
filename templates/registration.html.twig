@@ -1,8 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {{ form_start(form) }}
-    {{ form_rest(form) }}
-    <Button type="submit">Subscribe</Button>
-    {{ form_end(form) }}
+    <fieldset style="max-width: 600px; margin: 4em auto">
+        {{ form_start(form) }}
+        {{ form_rest(form) }}
+        <Button type="submit" class="btn btn-success">Subscribe</Button>
+        {{ form_end(form) }}
+    </fieldset>
 {% endblock %}

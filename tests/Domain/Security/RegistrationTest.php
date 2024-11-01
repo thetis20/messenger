@@ -37,6 +37,11 @@ class RegistrationTest extends TestCase
             {
                 return in_array($username, ['used-username']);
             }
+
+            public function register(User $user): void
+            {
+                // do nothing
+            }
         };
         $this->useCase = new Registration($userGateway);
     }

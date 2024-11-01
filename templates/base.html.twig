@@ -15,14 +15,13 @@
 </head>
 <body>
 {% block body %}{% endblock %}
-{% if app.session.flashbag.peekAll()|length > 0 %}
-    <ul class="flash-bag">
-        {% for type, messages in app.flashes %}
-            {% for message in messages %}
-                <li class="flash-bag__item">{{ type }} - {{ message }}</li>
-            {% endfor %}
-        {% endfor %}
-    </ul>
-{% endif %}
+
+{% for type, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert alert-{{ type }}" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
 </body>
 </html>
