@@ -16,8 +16,8 @@ class RegistrationTest extends IntegrationTestCase
         $this->assertResponseIsSuccessful();
 
         $form = $crawler->filter('form')->form([
-            'registration[email]' => 'email@email.com',
-            'registration[username]' => 'username',
+            'registration[email]' => 'username-new@email.com',
+            'registration[username]' => 'username-new',
             'registration[plainPassword][first]' => 'password',
             'registration[plainPassword][second]' => 'password',
         ]);

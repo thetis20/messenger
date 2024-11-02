@@ -3,11 +3,11 @@
 namespace App\Tests\Domain\Security;
 
 use App\Domain\Security\Entity\User;
-use App\Domain\Security\Gateway\UserGateway;
 use App\Domain\Security\Presenter\RegistrationPresenterInterface;
 use App\Domain\Security\Request\RegistrationRequest;
 use App\Domain\Security\Response\RegistrationResponse;
 use App\Domain\Security\UseCase\Registration;
+use App\Infrastructure\Test\Adapter\Repository\UserRepository;
 use Assert\AssertionFailedException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Uid\Uuid;
@@ -27,34 +27,16 @@ class RegistrationTest extends TestCase
                 $this->response = $response;
             }
         };
-        $userGateway = new class() implements UserGateway {
-
-            public function emailAlreadyExists(?string $email): bool
-            {
-                return in_array($email, ['used@email.com']);
-            }
-
-            public function usernameAlreadyExists(?string $username): bool
-            {
-                return in_array($username, ['used-username']);
-            }
-
-            public function register(User $user): void
-            {
-                // do nothing
-            }
-
-            public function findOneByUsername(string $username): ?User
-            {
-                return null;
-            }
-        };
+        $userGateway = new UserRepository();
         $this->useCase = new Registration($userGateway);
     }
 
     public function testSuccessful(): void
     {
-        $request = RegistrationRequest::create("email@email.com", "username", "password");
+        $email = "username-new@email.com";
+        $username = "username-new";
+        $password = "password";
+        $request = RegistrationRequest::create($email, $username, $password);
 
         $this->useCase->execute($request, $this->presenter);
 
@@ -62,9 +44,9 @@ class RegistrationTest extends TestCase
 
         $this->assertInstanceOf(User::class, $this->presenter->response->getUser());
         $this->assertInstanceOf(Uuid::class, $this->presenter->response->getUser()->getId());
-        $this->assertEquals('email@email.com', $this->presenter->response->getUser()->getEmail());
-        $this->assertEquals('username', $this->presenter->response->getUser()->getUsername());
-        $this->assertTrue(password_verify('password', $this->presenter->response->getUser()->getPassword()));
+        $this->assertEquals($email, $this->presenter->response->getUser()->getEmail());
+        $this->assertEquals($username, $this->presenter->response->getUser()->getUsername());
+        $this->assertTrue(password_verify($password, $this->presenter->response->getUser()->getPassword()));
     }
 
 
@@ -79,7 +61,7 @@ class RegistrationTest extends TestCase
     {
         $request = RegistrationRequest::create($email, $username, $plainPassword);
         $this->expectException(AssertionFailedException::class);
-        $this->useCase->execute($request , $this->presenter);
+        $this->useCase->execute($request, $this->presenter);
     }
 
     public function provideFailedRequestsData(): \Generator

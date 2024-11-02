@@ -8,6 +8,22 @@ use Symfony\Component\Uid\Uuid;
 
 class UserRepository implements UserGateway
 {
+    private array $users;
+    public function __construct()
+    {
+        $this->users = [
+            new User(
+                Uuid::v4(),
+                'username@email.com',
+                'username',
+                password_hash('password', PASSWORD_DEFAULT)),
+            new User(
+                Uuid::v4(),
+                'username1@email.com',
+                'username1',
+                password_hash('password', PASSWORD_DEFAULT))
+        ];
+    }
 
     public function emailAlreadyExists(?string $email): bool
     {
@@ -16,7 +32,7 @@ class UserRepository implements UserGateway
 
     public function usernameAlreadyExists(?string $username): bool
     {
-        return in_array($username, ['used-username']);
+        return in_array($username, ['used-username', 'username', 'username1']);
     }
 
     public function register(User $user): void
@@ -26,15 +42,10 @@ class UserRepository implements UserGateway
 
     public function findOneByUsername(string $username): ?User
     {
-        dump('findOneByUsername', $username);
-        if ($username === 'username') {
-            return new User(
-                Uuid::v4(),
-                'email@email.com',
-                $username,
-                password_hash('password', PASSWORD_DEFAULT));
-        }
-        return null;
+        $index = array_search($username, array_map(function ($user){
+            return $user->getUsername();
+        },$this->users));
+        return $index === false ? null : $this->users[$index];
     }
 
     public function findOneById(Uuid|string $id): ?User
