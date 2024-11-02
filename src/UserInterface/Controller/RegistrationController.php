@@ -6,15 +6,12 @@ use App\Domain\Security\Request\RegistrationRequest;
 use App\Domain\Security\UseCase\Registration;
 use App\Infrastructure\Entity\User;
 use App\UserInterface\Form\RegistrationType;
-use App\UserInterface\RegistrationPresenter;
-use Doctrine\ORM\EntityManagerInterface;
+use App\UserInterface\Presenter\RegistrationPresenter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
-use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Environment;
 

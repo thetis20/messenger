@@ -36,7 +36,7 @@ class CreateDiscussionTest extends TestCase
 
     public function testSuccessful(): void
     {
-        $request = new CreateDiscussionRequest("discussion name", "username; username1", $this->userGateway);
+        $request = CreateDiscussionRequest::create("discussion name", "username; username1", $this->userGateway);
 
         $this->useCase->execute($request, $this->presenter);
 
@@ -60,7 +60,7 @@ class CreateDiscussionTest extends TestCase
      */
     public function testFailedValidation(string $name, string $usernames): void
     {
-        $request = new CreateDiscussionRequest($name, $usernames, $this->userGateway);
+        $request = CreateDiscussionRequest::create($name, $usernames, $this->userGateway);
         $this->expectException(AssertionFailedException::class);
         $this->useCase->execute($request, $this->presenter);
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\UserInterface;
+namespace App\UserInterface\Presenter;
 
 use App\Domain\Security\Presenter\RegistrationPresenterInterface;
 use App\Domain\Security\Response\RegistrationResponse;

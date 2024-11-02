@@ -2,6 +2,10 @@ registration:
     path: /registration
     methods: GET|POST
     controller: App\UserInterface\Controller\RegistrationController
+create_discussion:
+    path: /create-discussion
+    methods: GET|POST
+    controller: App\UserInterface\Controller\CreateDiscussionController
 login:
     path: /login
     methods: GET|POST
