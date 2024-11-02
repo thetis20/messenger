@@ -11,18 +11,26 @@ class Assertion extends BaseAssertion
 {
     public const EXISTING_EMAIL = 5000;
     public const EXISTING_USERNAME = 5001;
+    public const NOT_EXISTS_USERNAME = 5002;
 
     public static function notExistingEmail(string $email, UserGateway $userGateway): void
     {
         if ($userGateway->emailAlreadyExists($email)) {
-            throw new AlreadyExistingEmailException("This email should be unique !", self::EXISTING_EMAIL);
+            throw new AlreadyExistingEmailException("This email \"$email\" already used !", self::EXISTING_EMAIL);
         }
     }
 
     public static function notExistingUsername(string $username, UserGateway $userGateway): void
     {
         if ($userGateway->usernameAlreadyExists($username)) {
-            throw new AlreadyExistingUsernameException("This username should be unique !", self::EXISTING_USERNAME);
+            throw new AlreadyExistingUsernameException("This username \"$username\" already used by a user !", self::EXISTING_USERNAME);
+        }
+    }
+
+    public static function userNotExists(string $username, UserGateway $userGateway): void
+    {
+        if (!$userGateway->usernameAlreadyExists($username)) {
+            throw new AlreadyExistingUsernameException("The username \"$username\" not exists !", self::NOT_EXISTS_USERNAME);
         }
     }
 }
