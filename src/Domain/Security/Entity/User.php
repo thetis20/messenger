@@ -18,15 +18,19 @@ class User
 
     public static function fromRegistration(RegistrationRequest $request): self
     {
-        return new self($request->getEmail(), $request->getUsername(), $request->getPlainPassword());
+        return new self(
+            Uuid::v4(),
+            $request->getEmail(),
+            $request->getUsername(),
+            password_hash($request->getPlainPassword(), PASSWORD_DEFAULT));
     }
 
-    public function __construct(string $email, string $username, string $password)
+    public function __construct(Uuid $id, string $email, string $username, string $password)
     {
-        $this->id = Uuid::v4();
+        $this->id = $id;
         $this->email = $email;
         $this->username = $username;
-        $this->password = password_hash($password, PASSWORD_DEFAULT);
+        $this->password = $password;
     }
 
     /**
@@ -56,10 +60,5 @@ class User
     public function getId(): Uuid
     {
         return $this->id;
-    }
-
-    public function setId(Uuid $id): void
-    {
-        $this->id = $id;
     }
 }

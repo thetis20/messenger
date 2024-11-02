@@ -3,6 +3,7 @@
 namespace App\Domain\Security\Gateway;
 
 use App\Domain\Security\Entity\User;
+use Symfony\Component\Uid\Uuid;
 
 interface UserGateway
 {
@@ -26,4 +27,16 @@ interface UserGateway
      * @return void
      */
     public function register(User $user): void;
+
+    /**
+     * @param string $username
+     * @return User|null
+     */
+    public function findOneByUsername(string $username): ?User;
+
+    /**
+     * @param Uuid|string $id
+     * @return User|null
+     */
+    public function findOneById(Uuid|string $id): ?User;
 }

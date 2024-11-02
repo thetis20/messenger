@@ -3,6 +3,7 @@
 namespace App\Infrastructure\Doctrine\Entity;
 
 use App\Infrastructure\Adapter\Repository\UserRepository;
+use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Uid\Uuid;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -11,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 class DoctrineUser
 {
     #[ORM\Id]
-    #[ORM\Column]
+    #[ORM\Column(type: UuidType::NAME)]
     private Uuid $id;
 
     #[ORM\Column(length: 255, nullable: true)]

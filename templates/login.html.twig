@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <form method="post">
+        {% if vm.errorMessage is not null %}
+            <div class="alert alert-danger">
+                {{ vm.errorMessage }}
+            </div>
+        {% endif %}
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input id="username" type="text" required="required" name="username" placeholder="username"
+                   value="{{ vm.lastUsername }}"/>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input id="password" type="password" required="required" name="password"/>
+        </div>
+        <button type="submit" class="btn btn-success">Login</button>
+    </form>
+{% endblock %}

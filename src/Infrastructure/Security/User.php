@@ -2,25 +2,36 @@
 
 namespace App\Infrastructure\Security;
 
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Domain\Security\Entity\User as UserDomain;
 
-class User implements UserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     private UserDomain $user;
 
+    public function __construct(UserDomain $user)
+    {
+        $this->user = $user;
+    }
+
     public function getRoles(): array
     {
-        // TODO: Implement getRoles() method.
+        return ['ROLE_USER'];
     }
 
     public function eraseCredentials(): void
     {
-        // TODO: Implement eraseCredentials() method.
+        return;
     }
 
     public function getUserIdentifier(): string
     {
-        // TODO: Implement getUserIdentifier() method.
+        return $this->user->getId();
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->user->getPassword();
     }
 }
