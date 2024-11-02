@@ -7,14 +7,14 @@
                 {{ vm.errorMessage }}
             </div>
         {% endif %}
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input id="username" type="text" required="required" name="username" placeholder="username"
+        <div class="mb-3">
+            <label for="username" class="form-label required">Username</label>
+            <input type="text" id="username" name="username" required="required" class="form-control"
                    value="{{ vm.lastUsername }}"/>
         </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input id="password" type="password" required="required" name="password"/>
+        <div class="mb-3">
+            <label for="password" class="form-label required">Password</label>
+            <input type="password" id="password" name="password" required="required" class="form-control"/>
         </div>
         <button type="submit" class="btn btn-success">Login</button>
     </form>
