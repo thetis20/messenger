@@ -6,17 +6,14 @@ use App\Domain\Messenger\Entity\Discussion;
 use App\Domain\Messenger\Gateway\DiscussionGateway;
 use App\Domain\Messenger\Presenter\CreateDiscussionPresenterInterface;
 use App\Domain\Messenger\Request\CreateDiscussionRequest;
-use App\Domain\Security\Gateway\UserGateway;
 use App\Domain\Security\Response\CreateDiscussionResponse;
 
 class CreateDiscussion
 {
-    private UserGateway $userGateway;
     private DiscussionGateway $discussionGateway;
 
-    public function __construct(UserGateway $userGateway, DiscussionGateway $discussionGateway)
+    public function __construct(DiscussionGateway $discussionGateway)
     {
-        $this->userGateway = $userGateway;
         $this->discussionGateway = $discussionGateway;
     }
 

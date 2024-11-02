@@ -47,7 +47,7 @@ class UserRepository extends ServiceEntityRepository implements UserGateway
         $doctrineUser->setUsername($user->getUsername());
         $doctrineUser->setPassword($user->getPassword());
         $this->getEntityManager()->persist($doctrineUser);
-        $this->getEntityManager()->flush($doctrineUser);
+        $this->getEntityManager()->flush();
     }
 
     public function findOneByUsername(string $username): ?User

@@ -15,6 +15,11 @@ class CreateDiscussionRequest
     private array $users;
     private UserGateway $userGateway;
 
+    public static function create(string $name, string $usernames, UserGateway $userGateway)
+    {
+        return new self($name, $usernames, $userGateway);
+    }
+
     /**
      * @param string $name
      * @param string $usernames
@@ -34,7 +39,7 @@ class CreateDiscussionRequest
 
     public function getUsers(): array
     {
-        return  $this->users;
+        return $this->users;
     }
 
     public function validate(): void
@@ -46,8 +51,8 @@ class CreateDiscussionRequest
         }
         $this->users = [];
         foreach (explode(';', $this->usernames) as $username) {
-            $user =$this->userGateway->findOneByUsername(trim($username));
-            if(!$user){
+            $user = $this->userGateway->findOneByUsername(trim($username));
+            if (!$user) {
                 throw new UserNotFoundException();
             }
             $this->users[] = $user;
