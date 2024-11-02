@@ -7,9 +7,23 @@ use App\Domain\Security\Gateway\UserGateway;
 use App\Infrastructure\Doctrine\Entity\DoctrineUser;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Uid\Uuid;
 
 class UserRepository extends ServiceEntityRepository implements UserGateway
 {
+    public static function parseUser(?DoctrineUser $doctrineUser): ?User
+    {
+        if (!$doctrineUser) {
+            return null;
+        }
+        return new User(
+            $doctrineUser->getId(),
+            $doctrineUser->getEmail(),
+            $doctrineUser->getUsername(),
+            $doctrineUser->getPassword()
+        );
+    }
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, DoctrineUser::class);
@@ -28,11 +42,21 @@ class UserRepository extends ServiceEntityRepository implements UserGateway
     public function register(User $user): void
     {
         $doctrineUser = new DoctrineUser();
+        $doctrineUser->setId($user->getId());
         $doctrineUser->setEmail($user->getEmail());
         $doctrineUser->setUsername($user->getUsername());
-        $doctrineUser->setPassword(password_hash($user->getPassword(), PASSWORD_DEFAULT));
-        $doctrineUser->setId($user->getId());
+        $doctrineUser->setPassword($user->getPassword());
         $this->getEntityManager()->persist($doctrineUser);
         $this->getEntityManager()->flush($doctrineUser);
+    }
+
+    public function findOneByUsername(string $username): ?User
+    {
+        return self::parseUser($this->findOneBy(['username' => $username]));
+    }
+
+    public function findOneById(Uuid|string $id): ?User
+    {
+        return self::parseUser($this->findOneBy(['id' => $id]));
     }
 }

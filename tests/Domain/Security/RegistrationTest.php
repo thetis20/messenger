@@ -10,6 +10,7 @@ use App\Domain\Security\Response\RegistrationResponse;
 use App\Domain\Security\UseCase\Registration;
 use Assert\AssertionFailedException;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Uid\Uuid;
 
 class RegistrationTest extends TestCase
 {
@@ -42,6 +43,11 @@ class RegistrationTest extends TestCase
             {
                 // do nothing
             }
+
+            public function findOneByUsername(string $username): ?User
+            {
+                return null;
+            }
         };
         $this->useCase = new Registration($userGateway);
     }
@@ -55,6 +61,7 @@ class RegistrationTest extends TestCase
         $this->assertInstanceOf(RegistrationResponse::class, $this->presenter->response);
 
         $this->assertInstanceOf(User::class, $this->presenter->response->getUser());
+        $this->assertInstanceOf(Uuid::class, $this->presenter->response->getUser()->getId());
         $this->assertEquals('email@email.com', $this->presenter->response->getUser()->getEmail());
         $this->assertEquals('username', $this->presenter->response->getUser()->getUsername());
         $this->assertTrue(password_verify('password', $this->presenter->response->getUser()->getPassword()));

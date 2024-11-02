@@ -29,7 +29,6 @@ class RegistrationController extends AbstractController
     {
         $this->formFactory = $formFactory;
         $this->twig = $twig;
-        //$this->flashBag = $flashBag;
         $this->urlGenerator = $urlGenerator;
     }
 
