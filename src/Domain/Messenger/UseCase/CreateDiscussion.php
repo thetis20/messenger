@@ -19,7 +19,6 @@ class CreateDiscussion
 
     public function execute(CreateDiscussionRequest $request, CreateDiscussionPresenterInterface $presenter): void
     {
-        $request->validate();
         $discussion = Discussion::fromCreation($request);
         $this->discussionGateway->insert($discussion);
         $presenter->present(new CreateDiscussionResponse($discussion));

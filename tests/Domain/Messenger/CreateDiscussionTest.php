@@ -3,15 +3,17 @@
 namespace App\Tests\Domain\Messenger;
 
 use App\Domain\Messenger\Entity\Discussion;
-use App\Domain\Messenger\Gateway\DiscussionGateway;
 use App\Domain\Messenger\Presenter\CreateDiscussionPresenterInterface;
 use App\Domain\Messenger\Request\CreateDiscussionRequest;
 use App\Domain\Messenger\UseCase\CreateDiscussion;
 use App\Domain\Security\Gateway\UserGateway;
 use App\Domain\Security\Response\CreateDiscussionResponse;
+use App\Infrastructure\Doctrine\Entity\DoctrineUser;
+use App\Infrastructure\Security\User;
 use App\Infrastructure\Test\Adapter\Repository\DiscussionRepository;
 use App\Infrastructure\Test\Adapter\Repository\UserRepository;
 use Assert\AssertionFailedException;
+use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
 
 class CreateDiscussionTest extends TestCase
@@ -31,12 +33,15 @@ class CreateDiscussionTest extends TestCase
             }
         };
         $this->userGateway = new UserRepository();
-        $this->useCase = new CreateDiscussion($this->userGateway, new DiscussionRepository());
+        $this->useCase = new CreateDiscussion(new DiscussionRepository());
     }
 
     public function testSuccessful(): void
     {
-        $request = CreateDiscussionRequest::create("discussion name", "username; username1", $this->userGateway);
+        $request = CreateDiscussionRequest::create(
+            "discussion name",
+            new ArrayCollection([$this->userGateway->findOneByUsername('username1')]),
+            new User($this->userGateway->findOneByUsername('username')));
 
         $this->useCase->execute($request, $this->presenter);
 
@@ -55,21 +60,25 @@ class CreateDiscussionTest extends TestCase
     /**
      * @dataProvider provideFailedValidationRequestsData
      * @param string $name
-     * @param string $usernames
+     * @param ArrayCollection<DoctrineUser> $users
+     * @param User $currentUser
      * @return void
      */
-    public function testFailedValidation(string $name, string $usernames): void
+    public function testFailedValidation(string $name, array $users, ?string $currentUser): void
     {
-        $request = CreateDiscussionRequest::create($name, $usernames, $this->userGateway);
+        $users = new ArrayCollection(array_map(function ($user) {
+            return $this->userGateway->findOneByUsername($user);
+        }, $users));
+        $currentUser = $currentUser ? new User($this->userGateway->findOneByUsername('username')) : $currentUser;
         $this->expectException(AssertionFailedException::class);
-        $this->useCase->execute($request, $this->presenter);
+        CreateDiscussionRequest::create($name, $users, $currentUser);
     }
 
     public function provideFailedValidationRequestsData(): \Generator
     {
-        yield ["", "username"];
-        yield ["name", ""];
-        yield ["name", "username;"];
-        yield ["name", "username;username-unknown"];
+        yield ["", ['username1'], 'username'];
+        yield ["name", [], 'username'];
+        yield ["name", ['username-unknown'], 'username'];
+        yield ["name", ['username'], 'username'];
     }
 }
