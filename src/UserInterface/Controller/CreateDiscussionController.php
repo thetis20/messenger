@@ -8,6 +8,7 @@ use App\Domain\Security\Gateway\UserGateway;
 use App\UserInterface\Form\DiscussionType;
 use App\UserInterface\Presenter\CreateDiscussionPresenter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,6 +36,7 @@ class CreateDiscussionController extends AbstractController
         $this->formFactory = $formFactory;
         $this->twig = $twig;
         $this->urlGenerator = $urlGenerator;
+        $this->requestFactory = $requestFactory;
     }
 
     /**
@@ -45,15 +47,17 @@ class CreateDiscussionController extends AbstractController
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function __invoke(Request $request, CreateDiscussion $useCase): Response
+    public function __invoke(Request $request, Security $security, CreateDiscussion $useCase): Response
     {
+        if (!$security->isGranted('ROLE_User')) {
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        }
         $form = $this->formFactory->create(DiscussionType::class)->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $useCaseRequest = CreateDiscussionRequest::create(
                 $form->getData()->getName(),
-                $form->getData()->getUsernames(),
-                $this->userGateway
+                $form->getData()->getUsers(),
+                $this->getUser()
             );
             $presenter = new CreateDiscussionPresenter($request);
             $useCase->execute($useCaseRequest, $presenter);

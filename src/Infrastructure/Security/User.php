@@ -39,4 +39,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->user->getUsername();
     }
+
+    public function getDomainUser(): UserDomain
+    {
+        return $this->user;
+    }
 }

@@ -4,32 +4,40 @@ namespace App\Domain\Messenger\Request;
 
 use App\Domain\Security\Assert\Assertion;
 use App\Domain\Security\Entity\User;
-use App\Domain\Security\Gateway\UserGateway;
-use Symfony\Component\Security\Core\Exception\UserNotFoundException;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class CreateDiscussionRequest
 {
     private string $name;
-    private string $usernames;
     /** @var array<User> */
     private array $users;
-    private UserGateway $userGateway;
 
-    public static function create(string $name, string $usernames, UserGateway $userGateway)
+    public static function create(string $name, ArrayCollection $users, \App\Infrastructure\Security\User $currentUser): CreateDiscussionRequest
     {
-        return new self($name, $usernames, $userGateway);
-    }
 
+        Assertion::notBlank($name);
+        $users = array_reduce([...$users->toArray(), $currentUser->getDomainUser()], function ($res, ?User $item) {
+            if (!$item instanceof User) {
+                return $res;
+            }
+            if (!in_array($item->getId()->toString(), array_map(function (User $user) {
+                return $user->getId()->toString();
+            }, $res))) {
+                $res[] = $item;
+            }
+            return $res;
+        }, []);
+        Assertion::minCount($users, 2);
+        return new CreateDiscussionRequest($name, $users);
+    }
     /**
      * @param string $name
-     * @param string $usernames
-     * @param UserGateway $userGateway
+     * @param array $users
      */
-    public function __construct(string $name, string $usernames, UserGateway $userGateway)
+    public function __construct(string $name, array $users)
     {
         $this->name = $name;
-        $this->usernames = $usernames;
-        $this->userGateway = $userGateway;
+        $this->users = $users;
     }
 
     public function getName(): string
@@ -40,22 +48,5 @@ class CreateDiscussionRequest
     public function getUsers(): array
     {
         return $this->users;
-    }
-
-    public function validate(): void
-    {
-        Assertion::notBlank($this->name);
-        Assertion::notBlank($this->usernames);
-        foreach (explode(';', $this->usernames) as $username) {
-            Assertion::userNotExists(trim($username), $this->userGateway);
-        }
-        $this->users = [];
-        foreach (explode(';', $this->usernames) as $username) {
-            $user = $this->userGateway->findOneByUsername(trim($username));
-            if (!$user) {
-                throw new UserNotFoundException();
-            }
-            $this->users[] = $user;
-        }
     }
 }
