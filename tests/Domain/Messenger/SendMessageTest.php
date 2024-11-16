@@ -4,11 +4,13 @@ namespace App\Tests\Domain\Messenger;
 
 use App\Domain\Messenger\Entity\Discussion;
 use App\Domain\Messenger\Entity\Message;
+use App\Domain\Messenger\Gateway\NotificationGateway;
 use App\Domain\Messenger\Presenter\SendMessagePresenterInterface;
 use App\Domain\Messenger\Request\SendMessageRequest;
 use App\Domain\Messenger\Response\SendMessageResponse;
 use App\Domain\Messenger\UseCase\SendMessage;
 use App\Domain\Security\Gateway\UserGateway;
+use App\Infrastructure\Test\Adapter\Output\Mailer;
 use App\Infrastructure\Test\Adapter\Repository\DiscussionRepository;
 use App\Infrastructure\Test\Adapter\Repository\MessageRepository;
 use App\Infrastructure\Test\Adapter\Repository\UserRepository;
@@ -34,12 +36,12 @@ class SendMessageTest extends TestCase
         };
         $this->userGateway = new UserRepository();
         $this->discussionGateway = new DiscussionRepository();
-        $this->useCase = new SendMessage(new MessageRepository());
+        $this->useCase = new SendMessage(new MessageRepository(), new Mailer());
     }
 
     public function testSuccessful(): void
     {
-        $messageContent ="message content";
+        $messageContent = "message content";
         $username = 'username';
         $discussionId = '3feb781c-8a9d-4650-8390-99aaa60efcba';
         $request = SendMessageRequest::create(

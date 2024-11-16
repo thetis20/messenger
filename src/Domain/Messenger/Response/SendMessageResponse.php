@@ -5,7 +5,7 @@ namespace App\Domain\Messenger\Response;
 use App\Domain\Messenger\Entity\Discussion;
 use App\Domain\Messenger\Entity\Message;
 
-class SendMessageResponse
+class SendMessageResponse implements ResponseInterface
 {
     private Discussion $discussion;
     private Message $message;
