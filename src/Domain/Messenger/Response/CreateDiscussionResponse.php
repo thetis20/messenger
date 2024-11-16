@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Security\Response;
+namespace App\Domain\Messenger\Response;
 
 use App\Domain\Messenger\Entity\Discussion;
 

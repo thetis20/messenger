@@ -6,7 +6,7 @@ use App\Domain\Messenger\Entity\Discussion;
 use App\Domain\Messenger\Gateway\DiscussionGateway;
 use App\Domain\Messenger\Presenter\CreateDiscussionPresenterInterface;
 use App\Domain\Messenger\Request\CreateDiscussionRequest;
-use App\Domain\Security\Response\CreateDiscussionResponse;
+use App\Domain\Messenger\Response\CreateDiscussionResponse;
 
 class CreateDiscussion
 {
