@@ -3,7 +3,7 @@
 namespace App\UserInterface\Presenter;
 
 use App\Domain\Messenger\Presenter\CreateDiscussionPresenterInterface;
-use App\Domain\Security\Response\CreateDiscussionResponse;
+use App\Domain\Messenger\Response\CreateDiscussionResponse;
 use App\UserInterface\ViewModel\CreateDiscussionViewModel;
 use Symfony\Component\HttpFoundation\Request;
 

@@ -45,4 +45,14 @@ class Discussion
     {
         return $this->members;
     }
+
+    public function isMember(User $author): bool
+    {
+        foreach ($this->members as $member) {
+            if ($member->getId() === $author->getId()) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Domain\Messenger\Presenter;
 
-use App\Domain\Security\Response\CreateDiscussionResponse;
+use App\Domain\Messenger\Response\CreateDiscussionResponse;
 
 interface CreateDiscussionPresenterInterface
 {

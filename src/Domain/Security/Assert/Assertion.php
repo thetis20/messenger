@@ -3,7 +3,7 @@
 namespace App\Domain\Security\Assert;
 
 use App\Domain\Security\Exception\AlreadyExistingEmailException;
-use App\Domain\Security\Exception\AlreadyExistingUsernameException;
+use App\Domain\Security\Exception\NotAMemberOfTheDiscussionException;
 use App\Domain\Security\Gateway\UserGateway;
 use Assert\Assertion as BaseAssertion;
 
@@ -23,14 +23,14 @@ class Assertion extends BaseAssertion
     public static function notExistingUsername(string $username, UserGateway $userGateway): void
     {
         if ($userGateway->usernameAlreadyExists($username)) {
-            throw new AlreadyExistingUsernameException("This username \"$username\" already used by a user !", self::EXISTING_USERNAME);
+            throw new NotAMemberOfTheDiscussionException("This username \"$username\" already used by a user !", self::EXISTING_USERNAME);
         }
     }
 
     public static function userNotExists(string $username, UserGateway $userGateway): void
     {
         if (!$userGateway->usernameAlreadyExists($username)) {
-            throw new AlreadyExistingUsernameException("The username \"$username\" not exists !", self::NOT_EXISTS_USERNAME);
+            throw new NotAMemberOfTheDiscussionException("The username \"$username\" not exists !", self::NOT_EXISTS_USERNAME);
         }
     }
 }
