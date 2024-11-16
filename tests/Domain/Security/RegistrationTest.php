@@ -66,13 +66,13 @@ class RegistrationTest extends TestCase
 
     public function provideFailedRequestsData(): \Generator
     {
-        yield ["", "username", "password"];
-        yield ["email", "username", "password"];
-        yield ["email@email.com", "", "password"];
-        yield ["email@email.com", "", "password"];
-        yield ["email@email.com", "username", ""];
-        yield ["email@email.com", "username", "fail"];
-        yield ["used@email.com", "username", "password"];
-        yield ["email@email.com", "used-username", "password"];
+        yield ["", "username-registration", "password"];
+        yield ["email", "username-registration", "password"];
+        yield ["username-registration@email.com", "", "password"];
+        yield ["username-registration@email.com", "", "password"];
+        yield ["username-registration@email.com", "username-registration", ""];
+        yield ["username-registration@email.com", "username-registration", "fail"];
+        yield ["username@email.com", "username-registration", "password"];
+        yield ["username-registration@email.com", "username", "password"];
     }
 }

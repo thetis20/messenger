@@ -16,8 +16,8 @@ class RegistrationTest extends IntegrationTestCase
         $this->assertResponseIsSuccessful();
 
         $form = $crawler->filter('form')->form([
-            'registration[email]' => 'username-new@email.com',
-            'registration[username]' => 'username-new',
+            'registration[email]' => 'username-ir@email.com',
+            'registration[username]' => 'username-ir',
             'registration[plainPassword][first]' => 'password',
             'registration[plainPassword][second]' => 'password',
         ]);
@@ -54,13 +54,13 @@ class RegistrationTest extends IntegrationTestCase
     public function provideFormData():\Generator
     {
         yield ['', 'username', ['first' => 'password', 'second' => 'password'], 'This value should not be blank.'];
-        yield ['wrong-email.com', 'username', ['first' => 'password', 'second' => 'password'], 'This value is not a valid email address.'];
-        yield ['used@email.com', 'username', ['first' => 'password', 'second' => 'password'], 'This email is already registered.'];
+        yield ['wrong-email.com', 'username-new', ['first' => 'password', 'second' => 'password'], 'This value is not a valid email address.'];
+        yield ['username@email.com', 'username-new', ['first' => 'password', 'second' => 'password'], 'This email is already registered.'];
         yield ['email@email.com', '', ['first' => 'password', 'second' => 'password'], 'This value should not be blank.'];
-        yield ['email@email.com', 'used-username', ['first' => 'password', 'second' => 'password'], 'This username is already registered.'];
-        yield ['email@email.com', 'username', ['first' => '', 'second' => 'password'], 'The values do not match.'];
-        yield ['email@email.com', 'username', ['first' => 'password', 'second' => ''], 'The values do not match.'];
-        yield ['email@email.com', 'username', ['first' => 'password', 'second' => 'wrong-password'], 'The values do not match.'];
-        yield ['email@email.com', 'username', ['first' => 'pass', 'second' => 'pass'], 'This value is too short. It should have 8 characters or more.'];
+        yield ['email@email.com', 'username', ['first' => 'password', 'second' => 'password'], 'This username is already registered.'];
+        yield ['email@email.com', 'username-new', ['first' => '', 'second' => 'password'], 'The values do not match.'];
+        yield ['email@email.com', 'username-new', ['first' => 'password', 'second' => ''], 'The values do not match.'];
+        yield ['email@email.com', 'username-new', ['first' => 'password', 'second' => 'wrong-password'], 'The values do not match.'];
+        yield ['email@email.com', 'username-new', ['first' => 'pass', 'second' => 'pass'], 'This value is too short. It should have 8 characters or more.'];
     }
 }
