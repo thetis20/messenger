@@ -3,7 +3,7 @@
 namespace App\UserInterface\ViewModel;
 
 
-use App\Domain\Messenger\Entity\Discussion;
+use Messenger\Domain\Entity\Discussion;
 
 class CreateDiscussionViewModel
 {

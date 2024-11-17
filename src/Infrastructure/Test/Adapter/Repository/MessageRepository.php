@@ -2,8 +2,8 @@
 
 namespace App\Infrastructure\Test\Adapter\Repository;
 
-use App\Domain\Messenger\Entity\Message;
-use App\Domain\Messenger\Gateway\MessageGateway;
+use Messenger\Domain\Entity\Message;
+use Messenger\Domain\Gateway\MessageGateway;
 
 class MessageRepository implements MessageGateway
 {

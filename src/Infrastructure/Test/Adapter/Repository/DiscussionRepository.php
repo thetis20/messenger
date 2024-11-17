@@ -2,8 +2,8 @@
 
 namespace App\Infrastructure\Test\Adapter\Repository;
 
-use App\Domain\Messenger\Entity\Discussion;
-use App\Domain\Messenger\Gateway\DiscussionGateway;
+use Messenger\Domain\Entity\Discussion;
+use Messenger\Domain\Gateway\DiscussionGateway;
 use Symfony\Component\Uid\Uuid;
 
 class DiscussionRepository implements DiscussionGateway

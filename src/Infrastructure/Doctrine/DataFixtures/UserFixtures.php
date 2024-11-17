@@ -9,7 +9,7 @@ use Symfony\Component\Uid\Uuid;
 
 class UserFixtures extends Fixture
 {
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $user = new DoctrineUser();
         $user->setId(Uuid::v4());

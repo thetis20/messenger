@@ -3,9 +3,10 @@
 namespace App\Domain\Security\Entity;
 
 use App\Domain\Security\Request\RegistrationRequest;
+use Messenger\Domain\Entity\UserInterface;
 use Symfony\Component\Uid\Uuid;
 
-class User
+class User implements UserInterface
 {
     /** @var Uuid */
     private Uuid $id;

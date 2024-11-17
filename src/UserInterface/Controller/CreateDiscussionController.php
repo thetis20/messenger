@@ -2,8 +2,8 @@
 
 namespace App\UserInterface\Controller;
 
-use App\Domain\Messenger\Request\CreateDiscussionRequest;
-use App\Domain\Messenger\UseCase\CreateDiscussion;
+use Messenger\Domain\Request\CreateDiscussionRequest;
+use Messenger\Domain\UseCase\CreateDiscussion;
 use App\Domain\Security\Gateway\UserGateway;
 use App\UserInterface\Form\DiscussionType;
 use App\UserInterface\Presenter\CreateDiscussionPresenter;

@@ -2,8 +2,8 @@
 
 namespace App\UserInterface\Presenter;
 
-use App\Domain\Messenger\Presenter\CreateDiscussionPresenterInterface;
-use App\Domain\Messenger\Response\CreateDiscussionResponse;
+use Messenger\Domain\Presenter\CreateDiscussionPresenterInterface;
+use Messenger\Domain\Response\CreateDiscussionResponse;
 use App\UserInterface\ViewModel\CreateDiscussionViewModel;
 use Symfony\Component\HttpFoundation\Request;
 
