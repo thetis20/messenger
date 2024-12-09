@@ -2,46 +2,59 @@
 
 namespace App\Infrastructure\Security;
 
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use App\Domain\Security\Entity\User as UserDomain;
 
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+final class User implements UserInterface
 {
-    private UserDomain $user;
-
-    public function __construct(UserDomain $user)
-    {
-        $this->user = $user;
-    }
+     public function __construct(
+        private string $uuid,
+        private string $userIdentifier,
+        private string $email,
+        private string $fullname,
+        private array  $roles,
+    ) {}
 
     public function getRoles(): array
     {
-        return ['ROLE_USER'];
-    }
-
-    public function eraseCredentials(): void
-    {
-        return;
-    }
-
-    public function getUserIdentifier(): string
-    {
-        return $this->user->getId();
+        return $this->roles;
     }
 
     public function getPassword(): ?string
     {
-        return $this->user->getPassword();
+        return null;
+    }
+
+    public function getSalt(): ?string
+    {
+        return null;
+    }
+
+    public function eraseCredentials(): void
+    {
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->userIdentifier;
     }
 
     public function getUsername(): string
     {
-        return $this->user->getUsername();
+        throw new \BadMethodCallException('Deprecated, should not be called');
     }
 
-    public function getDomainUser(): UserDomain
+    public function getUuid(): string
     {
-        return $this->user;
+        return $this->uuid;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function getFullname(): string
+    {
+        return $this->fullname;
     }
 }

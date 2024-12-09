@@ -2,7 +2,6 @@
 
 namespace App\UserInterface\Controller;
 
-use App\UserInterface\ViewModel\LoginViewModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,10 +20,8 @@ class LoginController extends AbstractController
     public function __invoke(AuthenticationUtils $authenticationUtils): Response
     {
         if($this->getUser()){
-            return new RedirectResponse($this->generateUrl('index'));
+            return new RedirectResponse($this->generateUrl('profile'));
         }
-        return new Response($this->twig->render('login.html.twig', [
-            "vm" => LoginViewModel::fromAuthenticationUtils($authenticationUtils)
-        ]));
+        return new Response($this->twig->render('login.html.twig'));
     }
 }

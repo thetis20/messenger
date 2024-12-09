@@ -4,6 +4,15 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    app.keycloak_home: '%env(KEYCLOAK_HOME)%'
+    app.keycloak_base: '%env(KEYCLOAK_BASE)%'
+    app.keycloak_authorization: '%app.keycloak_base%/protocol/openid-connect/auth'
+    app.keycloak_token_endpoint: '%app.keycloak_base%/protocol/openid-connect/token'
+    app.keycloak_logout_endpoint: '%app.keycloak_base%/protocol/openid-connect/logout'
+    app.keycloak_clientid: '%env(KEYCLOAK_CLIENDID)%'
+    app.keycloak_clientsecret: '%env(KEYCLOAK_CLIENTSECRET)%'
+    app.keycloak_verify_peer: '%env(bool:KEYCLOAK_VERIFY_PEER)%'
+    app.keycloak_verify_host: '%env(bool:KEYCLOAK_VERIFY_HOST)%'
 
 services:
     # default configuration for services in *this* file
@@ -26,3 +35,21 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Infrastructure\Security\OpenIdAuthenticator:
+        $authorizationEndpoint: '%app.keycloak_authorization%'
+        $clientId: '%app.keycloak_clientid%'
+
+    App\Infrastructure\Security\Client\OpenIdClient:
+        $clientId: '%app.keycloak_clientid%'
+        $clientSecret: '%app.keycloak_clientsecret%'
+        $tokenEndpoint: '%app.keycloak_token_endpoint%'
+        $logoutEndpoint: '%app.keycloak_logout_endpoint%'
+        $verifyPeer: '%app.keycloak_verify_peer%'
+        $verifyHost: '%app.keycloak_verify_host%'
+
+    App\Infrastructure\Security\Jwt\IdTokenDataExtractor:
+        $keycloakBase: '%app.keycloak_base%'
+        $keycloakClientId: '%app.keycloak_clientid%'
+        $algo: '%env(KEYCLOAK_ALGO)%'
+        $publicKey: '%env(KEYCLOAK_PK)%'

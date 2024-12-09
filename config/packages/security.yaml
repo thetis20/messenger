@@ -1,29 +1,17 @@
 security:
-    # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
-    password_hashers:
-        # auto hasher with default options for the User class (and children)
-        App\Infrastructure\Security: 'auto'
-        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
-            algorithm: 'auto'
-            cost: 15
-    # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
-        user_provider:
-            id: App\Infrastructure\Security\Provider\UserProvider
-#        users_in_memory: { memory: null }
+        keycloak:
+            id: App\Infrastructure\Security\OpenIdUserProvider
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             lazy: true
-            provider: user_provider
-            pattern : ^/
-            custom_authenticators:
-                - App\Infrastructure\Security\Guard\WebAuthenticator
+            custom_authenticator: App\Infrastructure\Security\OpenIdAuthenticator
             logout:
-                path: /logout
-
+                path: logout
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 
@@ -33,6 +21,8 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+        - { path: ^/profile, roles: ROLE_USER }
+
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 

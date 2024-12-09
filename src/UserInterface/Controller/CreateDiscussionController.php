@@ -30,17 +30,17 @@ class CreateDiscussionController extends AbstractController
         UserGateway           $userGateway,
         FormFactoryInterface  $formFactory,
         Environment           $twig,
-        UrlGeneratorInterface $urlGenerator)
+        UrlGeneratorInterface $urlGenerator, )
     {
         $this->userGateway = $userGateway;
         $this->formFactory = $formFactory;
         $this->twig = $twig;
         $this->urlGenerator = $urlGenerator;
-        $this->requestFactory = $requestFactory;
     }
 
     /**
      * @param Request $request
+     * @param Security $security
      * @param CreateDiscussion $useCase
      * @return Response
      * @throws LoaderError

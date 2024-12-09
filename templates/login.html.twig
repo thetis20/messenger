@@ -1,21 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <form method="post">
-        {% if vm.errorMessage is not null %}
-            <div class="alert alert-danger">
-                {{ vm.errorMessage }}
-            </div>
-        {% endif %}
-        <div class="mb-3">
-            <label for="username" class="form-label required">Username</label>
-            <input type="text" id="username" name="username" required="required" class="form-control"
-                   value="{{ vm.lastUsername }}"/>
-        </div>
-        <div class="mb-3">
-            <label for="password" class="form-label required">Password</label>
-            <input type="password" id="password" name="password" required="required" class="form-control"/>
-        </div>
-        <button type="submit" class="btn btn-success">Login</button>
-    </form>
+    <p>
+        <a href="{{ path('profile') }}" class="btn btn-dark">Connect with Openid</a>
+    </p>
 {% endblock %}
