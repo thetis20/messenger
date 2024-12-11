@@ -4,7 +4,6 @@ namespace App\UserInterface\Controller;
 
 use Messenger\Domain\Request\CreateDiscussionRequest;
 use Messenger\Domain\UseCase\CreateDiscussion;
-use App\Domain\Security\Gateway\UserGateway;
 use App\UserInterface\Form\DiscussionType;
 use App\UserInterface\Presenter\CreateDiscussionPresenter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,18 +20,15 @@ use Twig\Error\SyntaxError;
 
 class CreateDiscussionController extends AbstractController
 {
-    private UserGateway $userGateway;
     private FormFactoryInterface $formFactory;
     private Environment $twig;
     private UrlGeneratorInterface $urlGenerator;
 
     public function __construct(
-        UserGateway           $userGateway,
         FormFactoryInterface  $formFactory,
         Environment           $twig,
         UrlGeneratorInterface $urlGenerator, )
     {
-        $this->userGateway = $userGateway;
         $this->formFactory = $formFactory;
         $this->twig = $twig;
         $this->urlGenerator = $urlGenerator;
@@ -54,9 +50,10 @@ class CreateDiscussionController extends AbstractController
         }
         $form = $this->formFactory->create(DiscussionType::class)->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $users = explode(',', $form->getData()->getUsers());
             $useCaseRequest = CreateDiscussionRequest::create(
                 $form->getData()->getName(),
-                $form->getData()->getUsers(),
+                $users,
                 $this->getUser()
             );
             $presenter = new CreateDiscussionPresenter($request);

@@ -4,7 +4,7 @@ namespace App\Infrastructure\Security;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
-final class User implements UserInterface
+final class User implements UserInterface , \Messenger\Domain\Entity\UserInterface
 {
      public function __construct(
         private string $uuid,
@@ -54,6 +54,11 @@ final class User implements UserInterface
     }
 
     public function getFullname(): string
+    {
+        return $this->fullname;
+    }
+
+    public function getUsualName(): string
     {
         return $this->fullname;
     }

@@ -25,7 +25,12 @@ class DiscussionType extends AbstractType
                     new NotBlank()
                 ]
             ])
-            ->add('users', UserAutocompleteField::class);
+            ->add('users', TextType::class, [
+                'label' => 'Members',
+                'constraints' => [
+                    new NotBlank()
+                ]
+            ]);
     }
 
 }

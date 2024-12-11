@@ -69,6 +69,14 @@
         "symfony/polyfill-php82": "*"
     },
     "scripts": {
+        "start": [
+            "symfony serve --no-tls -d",
+            "docker compose up -d"
+        ],
+        "stop": [
+            "symfony serve:stop",
+            "docker compose up stop"
+        ],
         "database": [
             "@database-dev",
             "@database-panther",

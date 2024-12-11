@@ -2,11 +2,13 @@
 
 namespace App\Infrastructure\Security;
 
+use App\Infrastructure\Adapter\Repository\MemberRepository;
 use App\Infrastructure\Security\Client\OpenIdClient;
 use App\Infrastructure\Security\Dto\TokensBag;
 use App\Infrastructure\Security\Exception\InvalidStateException;
 use App\Infrastructure\Security\Exception\OpenIdServerException;
 use LogicException;
+use Messenger\Domain\Entity\Member;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,11 +34,14 @@ class OpenIdAuthenticator extends AbstractAuthenticator implements Authenticatio
 
     public function __construct(
         private UrlGeneratorInterface $urlGenerator,
-        private OpenIdClient $openIdClient,
-        private RequestStack $requestStack,
-        private string $authorizationEndpoint,
-        private string $clientId,
-    ) {}
+        private OpenIdClient          $openIdClient,
+        private RequestStack          $requestStack,
+        private MemberRepository      $memberRepository,
+        private string                $authorizationEndpoint,
+        private string                $clientId,
+    )
+    {
+    }
 
     public function supports(Request $request): ?bool
     {
@@ -92,6 +97,15 @@ class OpenIdAuthenticator extends AbstractAuthenticator implements Authenticatio
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        $user = $token->getUser();
+        if ($user instanceof User) {
+            $this->memberRepository->save(new Member(
+                $user->getEmail(),
+                $user->getUserIdentifier(),
+                $user->getFullname()
+            ));
+        }
+
         return new RedirectResponse($this->urlGenerator->generate('profile'));
     }
 
@@ -102,10 +116,10 @@ class OpenIdAuthenticator extends AbstractAuthenticator implements Authenticatio
             'An authentication error occured',
         );
 
-        return new RedirectResponse($this->urlGenerator->generate('home'));
+        return new RedirectResponse($this->urlGenerator->generate('index'));
     }
 
-    public function start(Request $request, AuthenticationException $authException = null): Response
+    public function start(Request $request, ?AuthenticationException $authException = null): Response
     {
         $state = (string)Uuid::v4();
         $request->getSession()->set(self::STATE_SESSION_KEY, $state);
@@ -116,7 +130,7 @@ class OpenIdAuthenticator extends AbstractAuthenticator implements Authenticatio
             'state' => $state,
             'scope' => 'openid roles profile email',
             // Force http since working on localhost
-            'redirect_uri' => 'http:'.$this->urlGenerator->generate('openid_redirecturi', [], UrlGeneratorInterface::NETWORK_PATH),
+            'redirect_uri' => 'http:' . $this->urlGenerator->generate('openid_redirecturi', [], UrlGeneratorInterface::NETWORK_PATH),
         ]);
 
         return new RedirectResponse(sprintf('%s?%s', $this->authorizationEndpoint, $qs));

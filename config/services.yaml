@@ -13,6 +13,8 @@ parameters:
     app.keycloak_clientsecret: '%env(KEYCLOAK_CLIENTSECRET)%'
     app.keycloak_verify_peer: '%env(bool:KEYCLOAK_VERIFY_PEER)%'
     app.keycloak_verify_host: '%env(bool:KEYCLOAK_VERIFY_HOST)%'
+    app.keycloak_admin_username: '%env(KEYCLOAK_ADMIN_USERNAME)%'
+    app.keycloak_admin_password: '%env(KEYCLOAK_ADMIN_PASSWORD)%'
 
 services:
     # default configuration for services in *this* file
@@ -27,7 +29,7 @@ services:
         exclude:
             - '../src/DependencyInjection/'
             - '../src/Infrastructure/Doctrine/Entity/'
-            - '../src/Infrastructure/Kernel.php'
+            - '../src/Kernel.php'
             - '../src/Infrastructure/{Test}'
     App\UserInterface\Controller\:
         resource: '../src/UserInterface/Controller'
@@ -53,3 +55,9 @@ services:
         $keycloakClientId: '%app.keycloak_clientid%'
         $algo: '%env(KEYCLOAK_ALGO)%'
         $publicKey: '%env(KEYCLOAK_PK)%'
+    
+    Messenger\Domain\UseCase\CreateDiscussion:  
+        autowire: true
+    
+    Messenger\Domain\Gateway\DiscussionGateway: '@App\Infrastructure\Adapter\Repository\DiscussionRepository'
+    Messenger\Domain\Gateway\MemberGateway: '@App\Infrastructure\Adapter\Repository\MemberRepository'

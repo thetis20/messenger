@@ -2,8 +2,6 @@
 
 namespace App\UserInterface\Form;
 
-use App\Infrastructure\Validator\AlreadyExistsEmail;
-use App\Infrastructure\Validator\AlreadyExistsUsername;
 use App\UserInterface\DataTransferObject\Registration;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -29,15 +27,13 @@ class RegistrationType extends AbstractType
             'label' => 'Email',
             'constraints' => [
                 new NotBlank(),
-                new Email(),
-                new AlreadyExistsEmail()
+                new Email()
             ]
         ])
             ->add('username', TextType::class, [
                 'label' => 'Username',
                 'constraints' => [
-                    new NotBlank(),
-                    new AlreadyExistsUsername(),
+                    new NotBlank()
                 ]
             ])
             ->add('plainPassword', RepeatedType::class, [
