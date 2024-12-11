@@ -50,10 +50,9 @@ class CreateDiscussionController extends AbstractController
         }
         $form = $this->formFactory->create(DiscussionType::class)->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $users = explode(',', $form->getData()->getUsers());
             $useCaseRequest = CreateDiscussionRequest::create(
                 $form->getData()->getName(),
-                $users,
+                $form->getData()->getEmails(),
                 $this->getUser()
             );
             $presenter = new CreateDiscussionPresenter($request);

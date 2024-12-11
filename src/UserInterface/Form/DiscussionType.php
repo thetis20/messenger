@@ -4,6 +4,8 @@ namespace App\UserInterface\Form;
 
 use App\UserInterface\DataTransferObject\Discussion;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,12 +27,11 @@ class DiscussionType extends AbstractType
                     new NotBlank()
                 ]
             ])
-            ->add('users', TextType::class, [
-                'label' => 'Members',
-                'constraints' => [
-                    new NotBlank()
-                ]
-            ]);
+            ->add('emails', CollectionType::class, [
+                'entry_type' => EmailType::class,
+                'allow_add' => true,
+                'prototype'     => true,
+            ]);;
     }
 
 }

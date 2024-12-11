@@ -2,16 +2,12 @@
 
 namespace App\UserInterface\DataTransferObject;
 
-use App\Domain\Security\Entity\User;
-use Doctrine\Common\Collections\ArrayCollection;
-
 class Discussion
 {
-    /** @var string|null  */
+    /** @var string|null */
     private ?string $name = null;
-    /** @var ArrayCollection<User>|null  */
-    private ?string $users = null;
-    private ?string $usernames = null;
+    /** @var string[] */
+    private array $emails;
 
     public function getName(): ?string
     {
@@ -23,24 +19,14 @@ class Discussion
         $this->name = $name;
     }
 
-    public function getUsernames(): ?string
+    public function getEmails(): array
     {
-        return $this->usernames;
+        return $this->emails;
     }
 
-    public function setUsernames(?string $usernames): void
+    public function setEmails(array $emails): void
     {
-        $this->usernames = $usernames;
-    }
-
-    public function getUsers(): ?string
-    {
-        return $this->users;
-    }
-
-    public function setUsers(?string $users): void
-    {
-        $this->users = $users;
+        $this->emails = $emails;
     }
 
 }
