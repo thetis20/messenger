@@ -27,6 +27,9 @@
         <include>
             <directory suffix=".php">src</directory>
         </include>
+        <exclude>
+            <directory>src/Infrastructure/Doctrine/Migration</directory>
+        </exclude>
     </coverage>
 
     <listeners>

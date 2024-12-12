@@ -5,12 +5,18 @@ namespace App\Tests\Integration;
 use App\Infrastructure\Security\Dto\TokensBag;
 use App\Infrastructure\Security\User;
 use App\Infrastructure\Test\IntegrationTestCase;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class CreateDiscussionTest extends IntegrationTestCase
+class CreateDiscussionTest extends WebTestCase
 {
+    protected static function createClient(array $options = [], array $server = []): KernelBrowser
+    {
+        return parent::createClient(array_merge($options, ['environment' => 'integration']), $server);
+    }
     public function testSuccessful()
     {
         $client = static::createClient();

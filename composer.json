@@ -67,6 +67,7 @@
         "symfony/polyfill-php82": "*"
     },
     "scripts": {
+        "test": "XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-html=coverage",
         "start": [
             "symfony serve --no-tls -d",
             "docker compose up -d"
