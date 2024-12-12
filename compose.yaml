@@ -51,6 +51,8 @@ services:
 ###< doctrine/doctrine-bundle ###
 
 volumes:
+  caddy_data:
+  caddy_config:
   ###> doctrine/doctrine-bundle ###
   database_data:
 ###< doctrine/doctrine-bundle ###
