@@ -1,42 +1,41 @@
 {% extends 'base.html.twig' %}
-
+{% form_theme form _self %}
 {% block body %}
     <fieldset style="max-width: 600px; margin: 4em auto">
         {{ form_start(form) }}
 
         {{ form_row(form.name) }}
+        {{ form_row(form.emails) }}
 
-        <fieldset class="mb-3">
-            {{ form_label(form.emails) }}
-            <div id="discussion_emails">
-                <ul id="email-fields-list"
-                    data-prototype="{{ form_widget(form.emails.vars.prototype)|e }}"
-                    data-widget-tags="{{ '<li></li>'|e }}"
-                    data-widget-counter="{{ form.emails|length }}">
-                    {% for email in form.emails %}
-                        <li>
-                            {{ form_errors(email) }}
-                            {{ form_widget(email) }}
-                        </li>
-                    {% endfor %}
-                </ul>
-
-                <button type="button"
-                        class="add-another-collection-widget btn btn-primary"
-                        data-list-selector="#email-fields-list">
-                    Add email
-                </button>
-            </div>
-            {{ form_rest(form.emails) }}
-        </fieldset>
-
-        {{ form_rest(form) }}
+        {{ form_errors(form) }}
 
         <Button type="submit" class="btn btn-success">Subscribe</Button>
 
         {{ form_end(form) }}
     </fieldset>
 
+
+{% endblock %}
+{% block collection_widget %}
+    <div id="discussion_emails">
+        <ul id="email-fields-list"
+            data-prototype="{{ form_widget(form.vars.prototype)|e }}"
+            data-widget-tags="{{ '<li></li>'|e }}"
+            data-widget-counter="{{ form|length }}">
+            {% for email in form %}
+                <li>
+                    {{ form_errors(email) }}
+                    {{ form_widget(email) }}
+                </li>
+            {% endfor %}
+        </ul>
+
+        <button type="button"
+                class="add-another-collection-widget btn btn-primary"
+                data-list-selector="#email-fields-list">
+            Add email
+        </button>
+    </div>
     <script>
         $(document).ready(function () {
             $('.add-another-collection-widget').click(function (e) {

@@ -9,6 +9,8 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Count;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class DiscussionType extends AbstractType
@@ -30,7 +32,16 @@ class DiscussionType extends AbstractType
             ->add('emails', CollectionType::class, [
                 'entry_type' => EmailType::class,
                 'allow_add' => true,
-                'prototype'     => true,
+                'prototype' => true,
+                'constraints' => [
+                    new Count(['min' => 1]),
+                ],
+                'prototype_options' => [
+                    'constraints' => [
+                        new NotBlank(),
+                        new Email()
+                    ]
+                ]
             ]);;
     }
 
