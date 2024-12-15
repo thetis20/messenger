@@ -1,7 +1,11 @@
-create_discussion:
-    path: /create-discussion
+discussions_create:
+    path: /discussions/create
     methods: GET|POST
     controller: App\UserInterface\Controller\CreateDiscussionController
+discussions_paginate:
+    path: /discussions/list
+    methods: GET
+    controller: App\UserInterface\Controller\PaginateDiscussionController
 login:
     path: /login
     methods: GET|POST

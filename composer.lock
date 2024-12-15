@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "59ae85fd8359911a955251f2db7b6790",
+    "content-hash": "d9774605c91e36e66bdde48cc654c103",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -3596,16 +3596,16 @@
         },
         {
             "name": "symfony/http-client-contracts",
-            "version": "v3.5.1",
+            "version": "v3.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-client-contracts.git",
-                "reference": "c2f3ad828596624ca39ea40f83617ef51ca8bbf9"
+                "reference": "ee8d807ab20fcb51267fdace50fbe3494c31e645"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-client-contracts/zipball/c2f3ad828596624ca39ea40f83617ef51ca8bbf9",
-                "reference": "c2f3ad828596624ca39ea40f83617ef51ca8bbf9",
+                "url": "https://api.github.com/repos/symfony/http-client-contracts/zipball/ee8d807ab20fcb51267fdace50fbe3494c31e645",
+                "reference": "ee8d807ab20fcb51267fdace50fbe3494c31e645",
                 "shasum": ""
             },
             "require": {
@@ -3654,7 +3654,7 @@
                 "standards"
             ],
             "support": {
-                "source": "https://github.com/symfony/http-client-contracts/tree/v3.5.1"
+                "source": "https://github.com/symfony/http-client-contracts/tree/v3.5.2"
             },
             "funding": [
                 {
@@ -3670,7 +3670,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-11-25T12:02:18+00:00"
+            "time": "2024-12-07T08:49:48+00:00"
         },
         {
             "name": "symfony/http-foundation",
@@ -6556,16 +6556,16 @@
         },
         {
             "name": "thetis20/messenger-domain",
-            "version": "1.0.4",
+            "version": "1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thetis20/messenger-domain.git",
-                "reference": "3ce9b0f61a0724d61cc3f37f78c21a3336f27f3f"
+                "reference": "9336a6d052e4246c45cff4607431a83c6c07aced"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thetis20/messenger-domain/zipball/3ce9b0f61a0724d61cc3f37f78c21a3336f27f3f",
-                "reference": "3ce9b0f61a0724d61cc3f37f78c21a3336f27f3f",
+                "url": "https://api.github.com/repos/thetis20/messenger-domain/zipball/9336a6d052e4246c45cff4607431a83c6c07aced",
+                "reference": "9336a6d052e4246c45cff4607431a83c6c07aced",
                 "shasum": ""
             },
             "require": {
@@ -6601,9 +6601,9 @@
             "description": "domain of messenger application",
             "support": {
                 "issues": "https://github.com/thetis20/messenger-domain/issues",
-                "source": "https://github.com/thetis20/messenger-domain/tree/1.0.4"
+                "source": "https://github.com/thetis20/messenger-domain/tree/1.0.5"
             },
-            "time": "2024-12-10T15:19:43+00:00"
+            "time": "2024-12-12T19:27:09+00:00"
         },
         {
             "name": "twig/extra-bundle",
@@ -6681,16 +6681,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v3.17.0",
+            "version": "v3.17.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "d3a64b742a5e74c57e3964d766e1032982145872"
+                "reference": "677ef8da6497a03048192aeeb5aa3018e379ac71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/d3a64b742a5e74c57e3964d766e1032982145872",
-                "reference": "d3a64b742a5e74c57e3964d766e1032982145872",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/677ef8da6497a03048192aeeb5aa3018e379ac71",
+                "reference": "677ef8da6497a03048192aeeb5aa3018e379ac71",
                 "shasum": ""
             },
             "require": {
@@ -6745,7 +6745,7 @@
             ],
             "support": {
                 "issues": "https://github.com/twigphp/Twig/issues",
-                "source": "https://github.com/twigphp/Twig/tree/v3.17.0"
+                "source": "https://github.com/twigphp/Twig/tree/v3.17.1"
             },
             "funding": [
                 {
@@ -6757,7 +6757,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-12-10T15:19:11+00:00"
+            "time": "2024-12-12T09:58:10+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -9161,6 +9161,68 @@
                 }
             ],
             "time": "2024-03-03T12:36:25+00:00"
+        },
+        {
+            "name": "veewee/composer-run-parallel",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/veewee/composer-run-parallel.git",
+                "reference": "7c833bb8780fab99efc429456f3e7efc81ef7ee6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/veewee/composer-run-parallel/zipball/7c833bb8780fab99efc429456f3e7efc81ef7ee6",
+                "reference": "7c833bb8780fab99efc429456f3e7efc81ef7ee6",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "~2.0",
+                "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0"
+            },
+            "require-dev": {
+                "composer/composer": "^2.0",
+                "react/promise": "1.2.1",
+                "symfony/process": "2.8.52"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "ComposerRunParallel\\ParallelPlugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "ComposerRunParallel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Toon Verwerft",
+                    "email": "toonverwerft@gmail.com"
+                }
+            ],
+            "description": "Run composer tasks in parallel",
+            "keywords": [
+                "composer",
+                "parallel",
+                "plugin",
+                "run",
+                "taskmanager"
+            ],
+            "support": {
+                "issues": "https://github.com/veewee/composer-run-parallel/issues",
+                "source": "https://github.com/veewee/composer-run-parallel/tree/1.4.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/veewee",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-10-21T13:49:52+00:00"
         }
     ],
     "aliases": [],

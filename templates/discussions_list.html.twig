@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <fieldset style="max-width: 600px; margin: 4em auto">
+        <div class="list-group">
+            {% for discussion in vm.discussions %}
+                <a href="/discussions/{{ discussion.id }}"
+                   class="list-group-item list-group-item-action {{ vm.isSeen(discussion) ? 'list-group-item-primary': '' }}"
+                   aria-current="true">
+                    <h6 class="mb-1">{{ discussion.name | e }}</h6>
+                    <small>{{ vm.getOtherMembers(discussion)|map(m => m.username)|join(', ') }}</small>
+                </a>
+            {% endfor %}
+        </div>
+    </fieldset>
+{% endblock %}

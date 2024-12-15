@@ -29,7 +29,7 @@ class CreateDiscussionTest extends WebTestCase
         ), 'main', [
             TokensBag::class => new TokensBag('accessToken', 'refreshToken', time() + 3600),
         ]);
-        $crawler = $client->request(Request::METHOD_GET, '/create-discussion');
+        $crawler = $client->request(Request::METHOD_GET, '/discussions/create');
 
         $this->assertResponseIsSuccessful();
         $crawler->filter('form')->each(function (Crawler $heads) {
@@ -74,7 +74,7 @@ class CreateDiscussionTest extends WebTestCase
         ), 'main', [
             TokensBag::class => new TokensBag('accessToken', 'refreshToken', time() + 3600),
         ]);
-        $crawler = $client->request(Request::METHOD_GET, '/create-discussion');
+        $crawler = $client->request(Request::METHOD_GET, '/discussions/create');
 
         $this->assertResponseIsSuccessful();
         $crawler->filter('form')->each(function (Crawler $heads) use ($emails) {

@@ -68,10 +68,8 @@
     },
     "scripts": {
         "test": "XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-html=coverage",
-        "start": [
-            "symfony serve --no-tls -d",
-            "docker compose up -d"
-        ],
+        "start-docker": "docker compose up",
+        "start-server": "symfony serve --no-tls",
         "stop": [
             "symfony serve:stop",
             "docker compose up stop"

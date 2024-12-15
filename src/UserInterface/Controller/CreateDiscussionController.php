@@ -45,9 +45,6 @@ class CreateDiscussionController extends AbstractController
      */
     public function __invoke(Request $request, Security $security, CreateDiscussion $useCase): Response
     {
-        if (!$security->isGranted('ROLE_User')) {
-            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        }
         $form = $this->formFactory->create(DiscussionType::class)->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $useCaseRequest = CreateDiscussionRequest::create(
@@ -59,7 +56,7 @@ class CreateDiscussionController extends AbstractController
             $useCase->execute($useCaseRequest, $presenter);
             return new RedirectResponse($this->urlGenerator->generate('index'));
         }
-        return new Response($this->twig->render('create_discussion.html.twig', [
+        return new Response($this->twig->render('discussions_create.html.twig', [
             'form' => $form->createView(),
         ]));
     }
