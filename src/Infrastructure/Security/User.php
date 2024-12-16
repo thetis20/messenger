@@ -7,7 +7,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 final class User implements UserInterface , \Messenger\Domain\Entity\UserInterface
 {
      public function __construct(
-        private string $uuid,
         private string $userIdentifier,
         private string $email,
         private string $fullname,
@@ -41,11 +40,6 @@ final class User implements UserInterface , \Messenger\Domain\Entity\UserInterfa
     public function getUsername(): string
     {
         throw new \BadMethodCallException('Deprecated, should not be called');
-    }
-
-    public function getUuid(): string
-    {
-        return $this->uuid;
     }
 
     public function getEmail(): string

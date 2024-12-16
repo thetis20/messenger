@@ -44,8 +44,7 @@ final class Version20241102092415 extends AbstractMigration
                 member_email VARCHAR(2047) NOT NULL,
                 seen BOOLEAN DEFAULT false,
                 PRIMARY KEY(discussion_id, member_email),
-                CONSTRAINT fk_discussion FOREIGN KEY(discussion_id) REFERENCES discussions(id),
-                CONSTRAINT fk_member FOREIGN KEY(member_email) REFERENCES members(email))');
+                CONSTRAINT fk_discussion FOREIGN KEY(discussion_id) REFERENCES discussions(id))');
     }
 
     public function down(Schema $schema): void

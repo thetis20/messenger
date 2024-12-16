@@ -4,7 +4,6 @@ namespace App\Tests\Integration;
 
 use App\Infrastructure\Security\Dto\TokensBag;
 use App\Infrastructure\Security\User;
-use App\Infrastructure\Test\IntegrationTestCase;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DomCrawler\Crawler;
@@ -15,13 +14,12 @@ class CreateDiscussionTest extends WebTestCase
 {
     protected static function createClient(array $options = [], array $server = []): KernelBrowser
     {
-        return parent::createClient(array_merge($options, ['environment' => 'integration']), $server);
+        return parent::createClient(array_merge($options, ['environment' => 'test']), $server);
     }
     public function testSuccessful()
     {
         $client = static::createClient();
         $client->loginUser(new User(
-            '3feb781c-8a9d-4650-8390-99aaa60efcba',
             'username',
             'user@mail.com',
             'fullname',
@@ -66,7 +64,6 @@ class CreateDiscussionTest extends WebTestCase
 
         $client = static::createClient();
         $client->loginUser(new User(
-            '3feb781c-8a9d-4650-8390-99aaa60efcba',
             'username',
             'user@mail.com',
             'fullname',

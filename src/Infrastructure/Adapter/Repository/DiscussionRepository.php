@@ -5,7 +5,6 @@ namespace App\Infrastructure\Adapter\Repository;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
-use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Messenger\Domain\Entity\Discussion;
 use Messenger\Domain\Entity\DiscussionMember;
@@ -108,20 +107,10 @@ class DiscussionRepository implements DiscussionGateway
         $qb = $this->generateSelectQueryBuilder($filters);
         $qb->select('d.id', 'd.name');
         $rows = $qb->fetchAllAssociative();
-        return $this->parse($rows);
-    }
+        $array = [];
 
-    /**
-     * @param array<string, mixed> $rows
-     * @param array<string, mixed> $rows
-     * @return Discussion[]
-     * @throws Exception
-     */
-    public function parse(array $rows): array
-    {
-        $results = [];
         $queryBuilder = $this->conn->createQueryBuilder();
-        $members = $queryBuilder->from('discussion_members', 'dm')
+        $discussionMemberRows = $queryBuilder->from('discussion_members', 'dm')
             ->join('dm', 'members', 'm', 'm.email = dm.member_email')
             ->where('dm.discussion_id IN (:discussions)')
             ->setParameter('discussions', array_map(function (array $row) {
@@ -129,15 +118,44 @@ class DiscussionRepository implements DiscussionGateway
             }, $rows), ArrayParameterType::STRING)
             ->select('*')
             ->fetchAllAssociative();
-
         foreach ($rows as $row) {
-            $results[$row['id']] = new Discussion(new Uuid($row['id']), $row['name']);
+            $array[$row['id']] = [
+                'id' => $row['id'],
+                'name' => $row['name'],
+                'discussionMembers' => []
+            ];
         }
 
-        foreach ($members as $row) {
-            $member = MemberRepository::parse($row);
-            $results[$row['discussion_id']]->addMember($member, $row['seen']);
+        foreach ($discussionMemberRows as $row) {
+            $array[$row['discussion_id']]['discussionMembers'][] = $row;
         }
-        return array_values($results);
+
+        return array_map([self::class, 'parse'], array_values($array));
+    }
+
+    /**
+     * @param array $row
+     * @return Discussion|null
+     */
+    static public function parse(array $row): ?Discussion
+    {
+        if (!$row) {
+            return null;
+        }
+        if (!$row['id'] instanceof Uuid) {
+            $row['id'] = new Uuid($row['id']);
+        }
+        $discussion = new Discussion($row['id'], $row['name']);
+        foreach ($row['discussionMembers'] as $item) {
+            if (!$item instanceof DiscussionMember) {
+                if (!isset($item['member'])) {
+                    $item['member'] = MemberRepository::parse($item);
+                }
+                $discussion->addMember($item['member'], $item['seen']);
+                continue;
+            }
+            $discussion->addMember($item->getMember(), $item->isSeen());
+        }
+        return $discussion;
     }
 }

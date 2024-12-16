@@ -1,13 +1,18 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+    <a class="btn btn-primary" href="/discussions/create">Create Discussion</a>
     <fieldset style="max-width: 600px; margin: 4em auto">
         <div class="list-group">
             {% for discussion in vm.discussions %}
-                <a href="/discussions/{{ discussion.id }}"
-                   class="list-group-item list-group-item-action {{ vm.isSeen(discussion) ? 'list-group-item-primary': '' }}"
-                   aria-current="true">
+                <a
+                    id="discussion_list_item_{{ discussion.id }}"
+                    href="/discussions/{{ discussion.id }}"
+                    data-type="discussion_list_item"
+                    data-seen="{{ vm.isSeen(discussion) ? 'true': 'false' }}"
+                    class="list-group-item list-group-item-action {{ vm.isSeen(discussion) ? 'list-group-item-primary': '' }}"
+                    aria-current="true">
                     <h6 class="mb-1">{{ discussion.name | e }}</h6>
-                    <small>{{ vm.getOtherMembers(discussion)|map(m => m.username)|join(', ') }}</small>
+                    <small>{{ vm.getOtherMembers(discussion)|map(m => m.username ?? m.email)|join(', ') }}</small>
                 </a>
             {% endfor %}
         </div>

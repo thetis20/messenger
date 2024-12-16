@@ -23,7 +23,7 @@ class MemberRepository implements MemberGateway
         }
         return new Member(
             $row['email'],
-            $row['useridentifier'],
+            $row['userIdentifier'] ?? $row['useridentifier'],
             $row['username']
         );
 

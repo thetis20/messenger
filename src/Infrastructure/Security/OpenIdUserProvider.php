@@ -42,7 +42,6 @@ final class OpenIdUserProvider implements UserProviderInterface
 
         // Extra user information from local database can also be added here
         return new User(
-            $idTokenData->getSubject(),
             $idTokenData->getUsername(),
             $idTokenData->getEmail(),
             $idTokenData->getEmail(),
