@@ -29,6 +29,7 @@ services:
         exclude:
             - '../src/DependencyInjection/'
             - '../src/Infrastructure/Doctrine/Entity/'
+            - '../src/Infrastructure/Doctrine/DataFixtures/'
             - '../src/Kernel.php'
             - '../src/Infrastructure/{Test}'
     App\UserInterface\Controller\:
@@ -60,9 +61,15 @@ services:
         autowire: true
     Messenger\Domain\UseCase\PaginateDiscussion:  
         autowire: true
+    Messenger\Domain\UseCase\PaginateMessage:  
+        autowire: true
+    Messenger\Domain\UseCase\SendMessage:  
+        autowire: true
     
     Messenger\Domain\Gateway\DiscussionGateway: '@App\Infrastructure\Adapter\Repository\DiscussionRepository'
     Messenger\Domain\Gateway\MemberGateway: '@App\Infrastructure\Adapter\Repository\MemberRepository'
+    Messenger\Domain\Gateway\MessageGateway: '@App\Infrastructure\Adapter\Repository\MessageRepository'
 
     DataFixtures\:
         resource: '../src/Infrastructure/Doctrine/DataFixtures'
+

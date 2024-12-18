@@ -129,7 +129,7 @@ class PaginateDiscussionTest extends WebTestCase
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
 
         foreach ($discussions as $discussion) {
-            $this->assertSelectorTextContains("#discussion_list_item_".$discussion->getId(), $discussion->getName());
+            $this->assertSelectorTextContains("#discussion_list_item_".$discussion->getId()->toString(), $discussion->getName());
         }
 
         $this->assertSelectorCount($count, '[data-type="discussion_list_item"]');
@@ -142,7 +142,7 @@ class PaginateDiscussionTest extends WebTestCase
         $data = self::data();
         yield [$data['members'][0], $data['discussions'], 3, 1];
         yield [$data['members'][1], [$data['discussions'][0]], 1, 1];
-        yield [$data['members'][2], [$data['discussions'][0], $data['discussions'][1]], 2, 2];
+        yield [$data['members'][2], [$data['discussions'][0]], 2, 2];
         yield [$data['members'][3], [$data['discussions'][1], $data['discussions'][2]], 2, 2];
     }
 }

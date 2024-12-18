@@ -8,13 +8,14 @@
                     id="discussion_list_item_{{ discussion.id }}"
                     href="/discussions/{{ discussion.id }}"
                     data-type="discussion_list_item"
-                    data-seen="{{ vm.isSeen(discussion) ? 'true': 'false' }}"
-                    class="list-group-item list-group-item-action {{ vm.isSeen(discussion) ? 'list-group-item-primary': '' }}"
+                    data-seen="{{ discussion.isSeen() ? 'true': 'false' }}"
+                    class="list-group-item list-group-item-action {{ discussion.isSeen() ? 'list-group-item-primary': '' }}"
                     aria-current="true">
                     <h6 class="mb-1">{{ discussion.name | e }}</h6>
-                    <small>{{ vm.getOtherMembers(discussion)|map(m => m.username ?? m.email)|join(', ') }}</small>
+                    <small>{{ discussion.getOtherMembers()|map(m => m.username ?? m.email)|join(', ') }}</small>
                 </a>
             {% endfor %}
+            {{ component('Pagination', {page: vm.page, totalPages: vm.totalPages}) }}
         </div>
     </fieldset>
 {% endblock %}

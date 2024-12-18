@@ -1,0 +1,43 @@
+{% if totalPages == 1 %}
+{% else %}
+    <div class="btn-group me-2" role="group">
+        <a
+            href="?page=1"
+            type="button" class="btn {{ this.page == 1 ? 'btn-primary':'btn-outline-primary' }}">
+            1
+        </a>
+        {% if page > 3 %}
+            <a disabled="disabled" type="button" class="btn btn-outline-primary disabled">...</a>
+        {% endif %}
+        {% if this.hasPreviousPage() and this.previousPage != 1 %}
+            <a
+                href="?page={{ this.previousPage }}"
+                type="button"
+                class="btn {{ this.page == this.previousPage  ? 'btn-primary':'btn-outline-primary' }}">
+                {{ this.previousPage }}
+            </a>
+        {% endif %}
+        {% if page != 1 and page != totalPages %}
+            <a disabled="disabled" type="button" class="btn btn-primary">{{ page }}</a>
+        {% endif %}
+        {% if this.hasNextPage() and this.nextPage != this.totalPages %}
+            <a
+                href="?page={{ this.nextPage }}"
+                type="button"
+                class="btn {{ this.page == this.nextPage ? 'btn-primary':'btn-outline-primary' }}">
+                {{ this.nextPage }}
+            </a>
+        {% endif %}
+        {% if totalPages > 3 and totalPages > page + 2 %}
+            <a disabled="disabled" type="button" class="btn btn-outline-primary disabled">...</a>
+        {% endif %}
+        {% if totalPages > 1 %}
+            <a
+                href="?page={{ totalPages }}"
+                type="button"
+                class="btn {{ this.page == totalPages  ? 'btn-primary':'btn-outline-primary' }}">
+                {{ totalPages }}
+            </a>
+        {% endif %}
+    </div>
+{% endif %}

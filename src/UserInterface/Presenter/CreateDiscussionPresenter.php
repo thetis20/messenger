@@ -4,28 +4,34 @@ namespace App\UserInterface\Presenter;
 
 use Messenger\Domain\Presenter\CreateDiscussionPresenterInterface;
 use Messenger\Domain\Response\CreateDiscussionResponse;
-use App\UserInterface\ViewModel\CreateDiscussionViewModel;
+use App\UserInterface\ViewModel\DiscussionViewModel;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class CreateDiscussionPresenter implements CreateDiscussionPresenterInterface
 {
-    private Request $request;
-    private CreateDiscussionViewModel $viewModel;
 
-    public function __construct(Request $request)
+    private DiscussionViewModel $viewModel;
+
+    public function __construct(
+        private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly UserInterface $user)
     {
-        $this->request = $request;
     }
 
     public function present(CreateDiscussionResponse $response): void
     {
-        $this->viewModel = new CreateDiscussionViewModel($response->getDiscussion());
-        $this->request->getSession()->getFlashBag()->add('success', 'Discussion created.');
+        $this->viewModel = DiscussionViewModel::create($response->getDiscussion(), $this->user);
     }
 
-    public function getViewModel(): CreateDiscussionViewModel
+    public function getResponse(): Response
     {
-        return $this->viewModel;
+        return new RedirectResponse($this->urlGenerator->generate('discussions_show', [
+            'discussionId' => $this->viewModel->getId(),
+        ]));
     }
 
 }

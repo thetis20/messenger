@@ -6,7 +6,6 @@ use App\UserInterface\ViewModel\PaginateDiscussionViewModel;
 use Messenger\Domain\Entity\UserInterface;
 use Messenger\Domain\Presenter\PaginateDiscussionPresenterInterface;
 use Messenger\Domain\Response\PaginateDiscussionResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
@@ -37,7 +36,9 @@ class PaginateDiscussionPresenter implements PaginateDiscussionPresenterInterfac
     {
         return $this->viewModel;
     }
-    public function getResponse(): Response{
+
+    public function getResponse(): Response
+    {
         return new Response($this->twig->render('discussions_list.html.twig', [
             'vm' => $this->getViewModel(),
         ]));

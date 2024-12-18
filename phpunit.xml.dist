@@ -29,6 +29,8 @@
         </include>
         <exclude>
             <directory>src/Infrastructure/Doctrine/Migration</directory>
+            <directory>src/Infrastructure/Doctrine/DataFixtures</directory>
+            <directory>src/Infrastructure/Security</directory>
         </exclude>
     </coverage>
 

@@ -2,6 +2,7 @@
 
 namespace App\UserInterface\Controller;
 
+use Messenger\Domain\Exception\CreateDiscussionForbiddenException;
 use Messenger\Domain\Request\CreateDiscussionRequest;
 use Messenger\Domain\UseCase\CreateDiscussion;
 use App\UserInterface\Form\DiscussionType;
@@ -20,18 +21,12 @@ use Twig\Error\SyntaxError;
 
 class CreateDiscussionController extends AbstractController
 {
-    private FormFactoryInterface $formFactory;
-    private Environment $twig;
-    private UrlGeneratorInterface $urlGenerator;
 
     public function __construct(
-        FormFactoryInterface  $formFactory,
-        Environment           $twig,
-        UrlGeneratorInterface $urlGenerator, )
+        private readonly FormFactoryInterface  $formFactory,
+        private readonly Environment           $twig,
+        private readonly UrlGeneratorInterface $urlGenerator, )
     {
-        $this->formFactory = $formFactory;
-        $this->twig = $twig;
-        $this->urlGenerator = $urlGenerator;
     }
 
     /**
@@ -42,6 +37,7 @@ class CreateDiscussionController extends AbstractController
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws CreateDiscussionForbiddenException
      */
     public function __invoke(Request $request, Security $security, CreateDiscussion $useCase): Response
     {
@@ -52,9 +48,9 @@ class CreateDiscussionController extends AbstractController
                 $form->getData()->getEmails(),
                 $this->getUser()
             );
-            $presenter = new CreateDiscussionPresenter($request);
+            $presenter = new CreateDiscussionPresenter($this->urlGenerator, $this->getUser());
             $useCase->execute($useCaseRequest, $presenter);
-            return new RedirectResponse($this->urlGenerator->generate('index'));
+            return $presenter->getResponse();
         }
         return new Response($this->twig->render('discussions_create.html.twig', [
             'form' => $form->createView(),

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d9774605c91e36e66bdde48cc654c103",
+    "content-hash": "ec0ae27a38ca653e9a4aeb8eb8fc1100",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -3864,6 +3864,92 @@
             "time": "2024-11-27T12:55:11+00:00"
         },
         {
+            "name": "symfony/intl",
+            "version": "v7.1.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/intl.git",
+                "reference": "e56b243fc0afa5a12bd11dace4002ada5a7d99f8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/intl/zipball/e56b243fc0afa5a12bd11dace4002ada5a7d99f8",
+                "reference": "e56b243fc0afa5a12bd11dace4002ada5a7d99f8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "symfony/deprecation-contracts": "^2.5|^3"
+            },
+            "conflict": {
+                "symfony/string": "<7.1"
+            },
+            "require-dev": {
+                "symfony/filesystem": "^6.4|^7.0",
+                "symfony/var-exporter": "^6.4|^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Intl\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/",
+                    "/Resources/data/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bernhard Schussek",
+                    "email": "bschussek@gmail.com"
+                },
+                {
+                    "name": "Eriksen Costa",
+                    "email": "eriksen.costa@infranology.com.br"
+                },
+                {
+                    "name": "Igor Wiedler",
+                    "email": "igor@wiedler.ch"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides access to the localization data of the ICU library",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "i18n",
+                "icu",
+                "internationalization",
+                "intl",
+                "l10n",
+                "localization"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/intl/tree/v7.1.8"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-11-08T15:46:42+00:00"
+        },
+        {
             "name": "symfony/mercure",
             "version": "v0.6.5",
             "source": {
@@ -5497,6 +5583,75 @@
             "time": "2024-09-25T14:20:29+00:00"
         },
         {
+            "name": "symfony/stimulus-bundle",
+            "version": "v2.22.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/stimulus-bundle.git",
+                "reference": "e13034d428354023c82a1db108d40fdf6cec2d36"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/stimulus-bundle/zipball/e13034d428354023c82a1db108d40fdf6cec2d36",
+                "reference": "e13034d428354023c82a1db108d40fdf6cec2d36",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "symfony/config": "^5.4|^6.0|^7.0",
+                "symfony/dependency-injection": "^5.4|^6.0|^7.0",
+                "symfony/deprecation-contracts": "^2.0|^3.0",
+                "symfony/finder": "^5.4|^6.0|^7.0",
+                "symfony/http-kernel": "^5.4|^6.0|^7.0",
+                "twig/twig": "^2.15.3|^3.8"
+            },
+            "require-dev": {
+                "symfony/asset-mapper": "^6.3|^7.0",
+                "symfony/framework-bundle": "^5.4|^6.0|^7.0",
+                "symfony/phpunit-bridge": "^5.4|^6.0|^7.0",
+                "symfony/twig-bundle": "^5.4|^6.0|^7.0",
+                "zenstruck/browser": "^1.4"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\UX\\StimulusBundle\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Integration with your Symfony app & Stimulus!",
+            "keywords": [
+                "symfony-ux"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/stimulus-bundle/tree/v2.22.1"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-12-06T14:30:33+00:00"
+        },
+        {
             "name": "symfony/stopwatch",
             "version": "v7.1.6",
             "source": {
@@ -6073,6 +6228,183 @@
             "time": "2024-09-25T14:20:29+00:00"
         },
         {
+            "name": "symfony/ux-live-component",
+            "version": "v2.22.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/ux-live-component.git",
+                "reference": "060e0c64e64125a4dfbf37dec281157faade1feb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/ux-live-component/zipball/060e0c64e64125a4dfbf37dec281157faade1feb",
+                "reference": "060e0c64e64125a4dfbf37dec281157faade1feb",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "symfony/deprecation-contracts": "^2.5|^3.0",
+                "symfony/property-access": "^5.4.5|^6.0|^7.0",
+                "symfony/stimulus-bundle": "^2.9",
+                "symfony/ux-twig-component": "^2.8",
+                "twig/twig": "^3.8.0"
+            },
+            "conflict": {
+                "symfony/config": "<5.4.0"
+            },
+            "require-dev": {
+                "doctrine/annotations": "^1.0",
+                "doctrine/collections": "^1.6.8|^2.0",
+                "doctrine/doctrine-bundle": "^2.4.3",
+                "doctrine/orm": "^2.9.4",
+                "doctrine/persistence": "^2.5.2|^3.0",
+                "phpdocumentor/reflection-docblock": "5.x-dev",
+                "symfony/dependency-injection": "^5.4|^6.0|^7.0",
+                "symfony/expression-language": "^5.4|^6.0|^7.0",
+                "symfony/form": "^5.4|^6.0|^7.0",
+                "symfony/framework-bundle": "^5.4|^6.0|^7.0",
+                "symfony/options-resolver": "^5.4|^6.0|^7.0",
+                "symfony/phpunit-bridge": "^6.1|^7.0",
+                "symfony/property-info": "^5.4|^6.0|^7.0",
+                "symfony/security-bundle": "^5.4|^6.0|^7.0",
+                "symfony/serializer": "^5.4|^6.0|^7.0",
+                "symfony/twig-bundle": "^5.4|^6.0|^7.0",
+                "symfony/validator": "^5.4|^6.0|^7.0",
+                "zenstruck/browser": "^1.2.0",
+                "zenstruck/foundry": "^2.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "thanks": {
+                    "url": "https://github.com/symfony/ux",
+                    "name": "symfony/ux"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\UX\\LiveComponent\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Live components for Symfony",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "components",
+                "symfony-ux",
+                "twig"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/ux-live-component/tree/v2.22.1"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-12-07T10:13:15+00:00"
+        },
+        {
+            "name": "symfony/ux-twig-component",
+            "version": "v2.22.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/ux-twig-component.git",
+                "reference": "9b347f6ca2d9e18cee630787f0a6aa453982bf18"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/ux-twig-component/zipball/9b347f6ca2d9e18cee630787f0a6aa453982bf18",
+                "reference": "9b347f6ca2d9e18cee630787f0a6aa453982bf18",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "symfony/dependency-injection": "^5.4|^6.0|^7.0",
+                "symfony/deprecation-contracts": "^2.2|^3.0",
+                "symfony/event-dispatcher": "^5.4|^6.0|^7.0",
+                "symfony/property-access": "^5.4|^6.0|^7.0",
+                "twig/twig": "^3.8"
+            },
+            "conflict": {
+                "symfony/config": "<5.4.0"
+            },
+            "require-dev": {
+                "symfony/console": "^5.4|^6.0|^7.0",
+                "symfony/css-selector": "^5.4|^6.0|^7.0",
+                "symfony/dom-crawler": "^5.4|^6.0|^7.0",
+                "symfony/framework-bundle": "^5.4|^6.0|^7.0",
+                "symfony/phpunit-bridge": "^6.0|^7.0",
+                "symfony/stimulus-bundle": "^2.9.1",
+                "symfony/twig-bundle": "^5.4|^6.0|^7.0",
+                "symfony/webpack-encore-bundle": "^1.15"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "thanks": {
+                    "url": "https://github.com/symfony/ux",
+                    "name": "symfony/ux"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\UX\\TwigComponent\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Twig components for Symfony",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "components",
+                "symfony-ux",
+                "twig"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/ux-twig-component/tree/v2.22.1"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-12-07T18:05:50+00:00"
+        },
+        {
             "name": "symfony/validator",
             "version": "v7.1.9",
             "source": {
@@ -6556,16 +6888,16 @@
         },
         {
             "name": "thetis20/messenger-domain",
-            "version": "1.0.5",
+            "version": "1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thetis20/messenger-domain.git",
-                "reference": "9336a6d052e4246c45cff4607431a83c6c07aced"
+                "reference": "59cd6400f7f0ff89aa9e64dde9523a07c1b40b40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thetis20/messenger-domain/zipball/9336a6d052e4246c45cff4607431a83c6c07aced",
-                "reference": "9336a6d052e4246c45cff4607431a83c6c07aced",
+                "url": "https://api.github.com/repos/thetis20/messenger-domain/zipball/59cd6400f7f0ff89aa9e64dde9523a07c1b40b40",
+                "reference": "59cd6400f7f0ff89aa9e64dde9523a07c1b40b40",
                 "shasum": ""
             },
             "require": {
@@ -6601,9 +6933,9 @@
             "description": "domain of messenger application",
             "support": {
                 "issues": "https://github.com/thetis20/messenger-domain/issues",
-                "source": "https://github.com/thetis20/messenger-domain/tree/1.0.5"
+                "source": "https://github.com/thetis20/messenger-domain/tree/1.0.6"
             },
-            "time": "2024-12-12T19:27:09+00:00"
+            "time": "2024-12-16T20:21:23+00:00"
         },
         {
             "name": "twig/extra-bundle",
@@ -6678,6 +7010,70 @@
                 }
             ],
             "time": "2024-09-26T19:22:23+00:00"
+        },
+        {
+            "name": "twig/intl-extra",
+            "version": "v3.17.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twigphp/intl-extra.git",
+                "reference": "4eeab2a3f8d04d1838be7251ab2d183f817aea7b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twigphp/intl-extra/zipball/4eeab2a3f8d04d1838be7251ab2d183f817aea7b",
+                "reference": "4eeab2a3f8d04d1838be7251ab2d183f817aea7b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0.2",
+                "symfony/intl": "^5.4|^6.4|^7.0",
+                "twig/twig": "^3.13|^4.0"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "^6.4|^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Twig\\Extra\\Intl\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                }
+            ],
+            "description": "A Twig extension for Intl",
+            "homepage": "https://twig.symfony.com",
+            "keywords": [
+                "intl",
+                "twig"
+            ],
+            "support": {
+                "source": "https://github.com/twigphp/intl-extra/tree/v3.17.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/twig/twig",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-11-20T13:19:52+00:00"
         },
         {
             "name": "twig/twig",
@@ -9161,68 +9557,6 @@
                 }
             ],
             "time": "2024-03-03T12:36:25+00:00"
-        },
-        {
-            "name": "veewee/composer-run-parallel",
-            "version": "1.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/veewee/composer-run-parallel.git",
-                "reference": "7c833bb8780fab99efc429456f3e7efc81ef7ee6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/veewee/composer-run-parallel/zipball/7c833bb8780fab99efc429456f3e7efc81ef7ee6",
-                "reference": "7c833bb8780fab99efc429456f3e7efc81ef7ee6",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "~2.0",
-                "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0"
-            },
-            "require-dev": {
-                "composer/composer": "^2.0",
-                "react/promise": "1.2.1",
-                "symfony/process": "2.8.52"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "ComposerRunParallel\\ParallelPlugin"
-            },
-            "autoload": {
-                "psr-4": {
-                    "ComposerRunParallel\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Toon Verwerft",
-                    "email": "toonverwerft@gmail.com"
-                }
-            ],
-            "description": "Run composer tasks in parallel",
-            "keywords": [
-                "composer",
-                "parallel",
-                "plugin",
-                "run",
-                "taskmanager"
-            ],
-            "support": {
-                "issues": "https://github.com/veewee/composer-run-parallel/issues",
-                "source": "https://github.com/veewee/composer-run-parallel/tree/1.4.0"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/veewee",
-                    "type": "github"
-                }
-            ],
-            "time": "2024-10-21T13:49:52+00:00"
         }
     ],
     "aliases": [],

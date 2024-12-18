@@ -2,13 +2,13 @@
 
 namespace App\UserInterface\ViewModel;
 
-
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use Messenger\Domain\Entity\Discussion;
 use Messenger\Domain\Entity\UserInterface;
 
 class PaginateDiscussionViewModel
 {
-    /** @var Discussion[] */
+    /** @var DiscussionViewModel[] */
     private array $discussions;
     /** @var int */
     private int $page;
@@ -23,7 +23,9 @@ class PaginateDiscussionViewModel
      */
     public function __construct(array $discussions, int $page, int $limit, int $total, UserInterface $user)
     {
-        $this->discussions = $discussions;
+        $this->discussions = array_map(function (Discussion $discussion) use ($user) {
+            return DiscussionViewModel::create($discussion, $user);
+        }, $discussions);
         $this->page = $page;
         $this->limit = $limit;
         $this->total = $total;
@@ -52,53 +54,6 @@ class PaginateDiscussionViewModel
 
     public function getTotalPages(): int
     {
-        return ceil($this->total / $this->limit);
-    }
-
-    public function hasPreviousPage(): bool
-    {
-        return $this->page > 1;
-    }
-
-    public function hasNextPage(): bool
-    {
-        return $this->page < $this->getTotalPages();
-    }
-
-    public function getNextPage(): ?int
-    {
-        if (!$this->hasNextPage()) {
-            return null;
-        }
-        return $this->page + 1;
-    }
-
-    public function getPreviousPage(): ?int
-    {
-        if (!$this->hasPreviousPage()) {
-            return null;
-        }
-        return $this->page - 1;
-    }
-
-    public function getOtherMembers(Discussion $discussion): array
-    {
-        $members = [];
-        foreach ($discussion->getDiscussionMembers() as $dm) {
-            if($dm->getMember()->getEmail() === $this->user->getEmail()) {
-                continue;
-            }
-            $members[] = $dm->getMember();
-        }
-        return $members;
-    }
-
-    public function isSeen(Discussion $discussion):bool{
-        foreach ($discussion->getDiscussionMembers() as $dm) {
-            if($dm->getMember()->getEmail() === $this->user->getEmail()) {
-               return $dm->isSeen();
-            }
-        }
-        return false;
+        return $this->total ? ceil($this->total / $this->limit) : 1;
     }
 }

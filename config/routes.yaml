@@ -6,10 +6,10 @@ discussions_paginate:
     path: /discussions/list
     methods: GET
     controller: App\UserInterface\Controller\PaginateDiscussionController
-login:
-    path: /login
+discussions_show:
+    path: /discussions/{discussionId}
     methods: GET|POST
-    controller: App\UserInterface\Controller\LoginController
+    controller: App\UserInterface\Controller\ShowDiscussionController
 profile:
     path: /profile
     methods: GET

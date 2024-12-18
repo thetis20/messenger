@@ -8,7 +8,6 @@ use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Messenger\Domain\Entity\Discussion;
 use Messenger\Domain\Entity\DiscussionMember;
-use Messenger\Domain\Entity\Member;
 use Messenger\Domain\Gateway\DiscussionGateway;
 use Symfony\Component\Uid\Uuid;
 
@@ -44,7 +43,9 @@ class DiscussionRepository implements DiscussionGateway
         $queryBuilder = $this->conn->createQueryBuilder();
         $queryBuilder->update('discussions')
             ->set('name', ':name')
+            ->where('id = :id')
             ->setParameter('name', $discussion->getName())
+            ->setParameter('id', $discussion->getId())
             ->executeStatement();
         $this->_updateDiscussionMembers($discussion);
     }
@@ -78,12 +79,16 @@ class DiscussionRepository implements DiscussionGateway
     {
         $queryBuilder = $this->conn->createQueryBuilder();
         $queryBuilder->from('discussions', 'd')
-            ->join('d', 'discussion_members', 'dm', 'd.id = dm.discussion_id')
-            ->groupBy('d.id', 'd.name');
+            ->join('d', 'discussion_members', 'dm', 'd.id = dm.discussion_id');
         if (isset($filters['discussionMembers.member.email'])) {
             $queryBuilder
                 ->where('dm.member_email = :member_email')
                 ->setParameter('member_email', $filters['discussionMembers.member.email']);
+        }
+        if (isset($filters['id'])) {
+            $queryBuilder
+                ->where('d.id = :id')
+                ->setParameter('id', $filters['id']);
         }
         return $queryBuilder;
     }
@@ -102,10 +107,20 @@ class DiscussionRepository implements DiscussionGateway
     /**
      * @throws Exception
      */
-    public function findBy(array $filters, array $options): array
+    public function findBy(array $filters, array $options = []): array
     {
-        $qb = $this->generateSelectQueryBuilder($filters);
-        $qb->select('d.id', 'd.name');
+        $qb = $this->generateSelectQueryBuilder($filters)
+            ->groupBy('d.id', 'd.name')
+            ->select('d.id', 'd.name');
+
+        if (isset($options['limit'])) {
+            $qb->setMaxResults($options['limit']);
+        }
+
+        if (isset($options['page']) && isset($options['limit'])) {
+            $qb->setFirstResult(($options['page'] - 1) * $options['limit']);
+        }
+
         $rows = $qb->fetchAllAssociative();
         $array = [];
 
@@ -157,5 +172,10 @@ class DiscussionRepository implements DiscussionGateway
             $discussion->addMember($item->getMember(), $item->isSeen());
         }
         return $discussion;
+    }
+
+    public function findOneById(string $discussionId): ?Discussion
+    {
+        return $this->findBy(['id' => $discussionId])[0] ?? null;
     }
 }

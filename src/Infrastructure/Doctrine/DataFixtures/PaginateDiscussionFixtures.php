@@ -7,7 +7,6 @@ use App\Infrastructure\Adapter\Repository\MemberRepository;
 use App\Tests\Integration\PaginateDiscussionTest;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\Uid\Uuid;
 
 class PaginateDiscussionFixtures extends Fixture
 {

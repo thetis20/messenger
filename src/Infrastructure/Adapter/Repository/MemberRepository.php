@@ -54,8 +54,10 @@ class MemberRepository implements MemberGateway
         $queryBuilder->update('members')
             ->set('useridentifier', ':useridentifier')
             ->set('username', ':username')
+            ->where('email = :email')
             ->setParameter('useridentifier', $member->getUserIdentifier())
-            ->setParameter('username', $member->getUsername());
+            ->setParameter('username', $member->getUsername())
+            ->setParameter('email', $member->getEmail());
         $queryBuilder->executeStatement();
     }
 

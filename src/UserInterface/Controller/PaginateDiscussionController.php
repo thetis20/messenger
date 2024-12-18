@@ -8,7 +8,6 @@ use App\UserInterface\Presenter\PaginateDiscussionPresenter;
 use Messenger\Domain\UseCase\PaginateDiscussion;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -17,14 +16,10 @@ use Twig\Environment;
 class PaginateDiscussionController extends AbstractController
 {
     private Environment $twig;
-    private UrlGeneratorInterface $urlGenerator;
 
-    public function __construct(
-        Environment           $twig,
-        UrlGeneratorInterface $urlGenerator,)
+    public function __construct(Environment $twig)
     {
         $this->twig = $twig;
-        $this->urlGenerator = $urlGenerator;
     }
 
     /**
@@ -40,7 +35,7 @@ class PaginateDiscussionController extends AbstractController
         $useCaseRequest = PaginateDiscussionRequest::create(
             $this->getUser(),
             [
-                'page' => $request->query->get('page', 1),
+                'page' => $request->query->get('page', 1)
             ]
         );
         $useCase->execute($useCaseRequest, $presenter);
