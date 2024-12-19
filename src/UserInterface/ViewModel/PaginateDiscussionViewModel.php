@@ -2,7 +2,6 @@
 
 namespace App\UserInterface\ViewModel;
 
-use Knp\Component\Pager\Pagination\PaginationInterface;
 use Messenger\Domain\Entity\Discussion;
 use Messenger\Domain\Entity\UserInterface;
 
@@ -16,7 +15,6 @@ class PaginateDiscussionViewModel
     private int $limit;
     /** @var int */
     private int $total;
-    private UserInterface $user;
 
     /**
      * @param Discussion[] $discussions
@@ -29,9 +27,11 @@ class PaginateDiscussionViewModel
         $this->page = $page;
         $this->limit = $limit;
         $this->total = $total;
-        $this->user = $user;
     }
 
+    /**
+     * @return DiscussionViewModel[]
+     */
     public function getDiscussions(): array
     {
         return $this->discussions;

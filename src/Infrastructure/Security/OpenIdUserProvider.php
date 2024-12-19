@@ -8,10 +8,10 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-final class OpenIdUserProvider implements UserProviderInterface
+final readonly class OpenIdUserProvider implements UserProviderInterface
 {
     public function __construct(
-        private RequestStack $requestStack,
+        private RequestStack         $requestStack,
         private IdTokenDataExtractor $idTokenDataExtractor,
     ) {}
 

@@ -75,6 +75,9 @@ class DiscussionRepository implements DiscussionGateway
         }
     }
 
+    /**
+     * @param array{"id"?:string, "discussionMembers.member.email"?: string} $filters
+     */
     private function generateSelectQueryBuilder(array $filters): QueryBuilder
     {
         $queryBuilder = $this->conn->createQueryBuilder();
@@ -149,7 +152,7 @@ class DiscussionRepository implements DiscussionGateway
     }
 
     /**
-     * @param array $row
+     * @param array<string, mixed> $row
      * @return Discussion|null
      */
     static public function parse(array $row): ?Discussion
@@ -174,7 +177,7 @@ class DiscussionRepository implements DiscussionGateway
         return $discussion;
     }
 
-    public function findOneById(string $discussionId): ?Discussion
+    public function find(string $discussionId): ?Discussion
     {
         return $this->findBy(['id' => $discussionId])[0] ?? null;
     }

@@ -4,10 +4,11 @@ namespace App\UserInterface\ViewModel;
 
 
 use Messenger\Domain\Entity\Discussion;
+use Messenger\Domain\Entity\Member;
 use Messenger\Domain\Entity\Message;
 use Messenger\Domain\Entity\UserInterface;
 
-class PaginateMessageViewModel
+class ShowDiscussionViewModel
 {
     private Discussion $discussion;
     /** @var Message[] */
@@ -26,9 +27,9 @@ class PaginateMessageViewModel
     public function __construct(Discussion $discussion, array $messages, int $page, int $limit, int $total, UserInterface $user)
     {
         $this->discussion = DiscussionViewModel::create($discussion, $user);
-        $this->messages = array_map(function (Message $message) use ($user){
+        $this->messages = array_map(function (Message $message) use ($user) {
             return MessageViewModel::create($message, $user);
-        },$messages);
+        }, $messages);
         $this->page = $page;
         $this->limit = $limit;
         $this->total = $total;
@@ -40,6 +41,9 @@ class PaginateMessageViewModel
         return $this->discussion;
     }
 
+    /**
+     * @return Message[]
+     */
     public function getMessages(): array
     {
         return $this->messages;
@@ -96,6 +100,9 @@ class PaginateMessageViewModel
         return $this->page - 1;
     }
 
+    /**
+     * @return Member[]
+     */
     public function getOtherMembers(): array
     {
         $members = [];

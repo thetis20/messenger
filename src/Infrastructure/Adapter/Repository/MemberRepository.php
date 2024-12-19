@@ -16,6 +16,10 @@ class MemberRepository implements MemberGateway
         $this->conn = $conn;
     }
 
+    /**
+     * @param array<string, mixed>|null $row
+     * @return Member|null
+     */
     static function parse(?array $row): ?Member
     {
         if (!$row) {
@@ -74,7 +78,7 @@ class MemberRepository implements MemberGateway
             ->setParameter('email', $email)
             ->executeQuery()
             ->fetchAllAssociative();
-        $m =  self::parse($result[0] ?? null);
+        $m = self::parse($result[0] ?? null);
         return $m;
     }
 

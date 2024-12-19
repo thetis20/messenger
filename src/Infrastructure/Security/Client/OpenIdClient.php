@@ -3,6 +3,10 @@
 namespace App\Infrastructure\Security\Client;
 
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 final class OpenIdClient
@@ -42,6 +46,14 @@ final class OpenIdClient
         ]);
     }
 
+    /**
+     * @param array<string, mixed> $body
+     * @return string
+     * @throws ClientExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
+     */
     private function callTokenEntryPoint(array $body): string
     {
         $response = $this->httpClient->request('POST', $this->tokenEndpoint, [

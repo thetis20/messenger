@@ -40,10 +40,13 @@ class MessageRepository implements MessageGateway
             ->setParameter('discussion_id', $message->getDiscussion()->getId()->toString())
             ->setParameter('message', $message->getMessage())
             ->setParameter('member_email', $message->getAuthor()->getEmail())
-            ->setParameter('created_at', $message->getCreatedAt()->format(\DateTime::ATOM), )
+            ->setParameter('created_at', $message->getCreatedAt()->format(\DateTime::ATOM))
             ->executeStatement();
     }
 
+    /**
+     * @param array{"id"?:string ,"discussion.id"?: string} $filters
+     */
     private function generateSelectQueryBuilder(array $filters): QueryBuilder
     {
         $queryBuilder = $this->conn->createQueryBuilder();
@@ -86,8 +89,9 @@ class MessageRepository implements MessageGateway
     }
 
     /**
-     * @param array $row
-     * @return Discussion|null
+     * @param array<string, mixed> $row
+     * @return Message|null
+     * @throws \DateMalformedStringException
      */
     static public function parse(array $row): ?Message
     {

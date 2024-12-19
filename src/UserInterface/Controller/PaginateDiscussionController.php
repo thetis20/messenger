@@ -3,23 +3,21 @@
 namespace App\UserInterface\Controller;
 
 use Messenger\Domain\Exception\PaginateDiscussionForbiddenException;
-use Messenger\Domain\Request\PaginateDiscussionRequest;
 use App\UserInterface\Presenter\PaginateDiscussionPresenter;
+use Messenger\Domain\RequestFactory\PaginateDiscussionRequestFactory;
 use Messenger\Domain\UseCase\PaginateDiscussion;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Environment;
 
-class PaginateDiscussionController extends AbstractController
+final class PaginateDiscussionController extends BaseController
 {
-    private Environment $twig;
 
-    public function __construct(Environment $twig)
+    public function __construct(
+        private readonly Environment                      $twig,
+        private readonly PaginateDiscussionRequestFactory $requestFactory)
     {
-        $this->twig = $twig;
     }
 
     /**
@@ -31,9 +29,9 @@ class PaginateDiscussionController extends AbstractController
      */
     public function __invoke(Request $request, Security $security, PaginateDiscussion $useCase): Response
     {
-        $presenter = new PaginateDiscussionPresenter($this->twig, $this->getUser());
-        $useCaseRequest = PaginateDiscussionRequest::create(
-            $this->getUser(),
+        $presenter = new PaginateDiscussionPresenter($this->twig, $this->getCurrentUser());
+        $useCaseRequest = $this->requestFactory->create(
+            $this->getCurrentUser(),
             [
                 'page' => $request->query->get('page', 1)
             ]

@@ -4,16 +4,26 @@ namespace App\Infrastructure\Security\Jwt;
 
 use stdClass;
 
-final class IdTokenData
+final readonly class IdTokenData
 {
+    /**
+     * @param int $exp
+     * @param string $subject
+     * @param string $email
+     * @param string $username
+     * @param string $name
+     * @param string[] $roles
+     */
     public function __construct(
-        private int $exp,
+        private int    $exp,
         private string $subject,
         private string $email,
         private string $username,
         private string $name,
-        private array $roles,
-    ) {}
+        private array  $roles,
+    )
+    {
+    }
 
     public function getExpires(): int
     {
@@ -40,6 +50,9 @@ final class IdTokenData
         return $this->name;
     }
 
+    /**
+     * @return string[]
+     */
     public function getRoles(): array
     {
         return $this->roles;

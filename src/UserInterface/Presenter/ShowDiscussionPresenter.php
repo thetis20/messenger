@@ -2,16 +2,19 @@
 
 namespace App\UserInterface\Presenter;
 
-use App\UserInterface\ViewModel\PaginateMessageViewModel;
+use App\UserInterface\ViewModel\ShowDiscussionViewModel;
 use Messenger\Domain\Entity\UserInterface;
-use Messenger\Domain\Presenter\PaginateMessagePresenterInterface;
-use Messenger\Domain\Response\PaginateMessageResponse;
+use Messenger\Domain\Presenter\ShowDiscussionPresenterInterface;
+use Messenger\Domain\Response\ShowDiscussionResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
-class PaginateMessagePresenter implements PaginateMessagePresenterInterface
+class ShowDiscussionPresenter implements ShowDiscussionPresenterInterface
 {
-    private PaginateMessageViewModel $viewModel;
+    private ShowDiscussionViewModel $viewModel;
     private Environment $twig;
     private UserInterface $user;
 
@@ -21,9 +24,9 @@ class PaginateMessagePresenter implements PaginateMessagePresenterInterface
         $this->user = $user;
     }
 
-    public function present(PaginateMessageResponse $response): void
+    public function present(ShowDiscussionResponse $response): void
     {
-        $this->viewModel = new PaginateMessageViewModel(
+        $this->viewModel = new ShowDiscussionViewModel(
             $response->getDiscussion(),
             $response->getMessages(),
             $response->getPage(),
@@ -33,11 +36,18 @@ class PaginateMessagePresenter implements PaginateMessagePresenterInterface
         );
     }
 
-    public function getViewModel(): PaginateMessageViewModel
+    public function getViewModel(): ShowDiscussionViewModel
     {
         return $this->viewModel;
     }
 
+    /**
+     * @param array<string, mixed> $context
+     * @return Response
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
     public function getResponse(array $context = []): Response
     {
         return new Response($this->twig->render('discussions_show.html.twig', array_merge($context, [

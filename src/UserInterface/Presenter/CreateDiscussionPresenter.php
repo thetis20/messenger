@@ -2,14 +2,13 @@
 
 namespace App\UserInterface\Presenter;
 
+use Messenger\Domain\Entity\UserInterface;
 use Messenger\Domain\Presenter\CreateDiscussionPresenterInterface;
 use Messenger\Domain\Response\CreateDiscussionResponse;
 use App\UserInterface\ViewModel\DiscussionViewModel;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class CreateDiscussionPresenter implements CreateDiscussionPresenterInterface
 {

@@ -2,28 +2,34 @@
 
 namespace App\Infrastructure\Security;
 
-use Symfony\Component\Security\Core\User\UserInterface;
-
-final class User implements UserInterface , \Messenger\Domain\Entity\UserInterface
+final class User implements \Symfony\Component\Security\Core\User\UserInterface, \Messenger\Domain\Entity\UserInterface
 {
-     public function __construct(
-        private string $userIdentifier,
-        private string $email,
-        private string $fullname,
-        private array  $roles,
-    ) {}
+    /**
+     * @param string $userIdentifier
+     * @param string $email
+     * @param string $fullname
+     * @param string[] $roles
+     */
+    public function __construct(
+        private readonly string $userIdentifier,
+        private readonly string $email,
+        private readonly string $fullname,
+        private readonly array  $roles,
+    )
+    {
+    }
 
     public function getRoles(): array
     {
         return $this->roles;
     }
 
-    public function getPassword(): ?string
+    public function getPassword(): null
     {
         return null;
     }
 
-    public function getSalt(): ?string
+    public function getSalt(): null
     {
         return null;
     }

@@ -5,14 +5,15 @@ namespace App\UserInterface\ViewModel;
 
 use Messenger\Domain\Entity\Discussion;
 use Messenger\Domain\Entity\DiscussionMember;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Messenger\Domain\Entity\Member;
+use Messenger\Domain\Entity\UserInterface;
 use Symfony\Component\Uid\Uuid;
 
 class DiscussionViewModel extends Discussion
 {
     private UserInterface $currentUser;
 
-    static public function create(Discussion $discussion, UserInterface $user)
+    static public function create(Discussion $discussion, UserInterface $user): DiscussionViewModel
     {
         return new self($discussion->getId(), $discussion->getName(), $discussion->getDiscussionMembers(), $user);
     }
@@ -26,6 +27,9 @@ class DiscussionViewModel extends Discussion
         $this->currentUser = $user;
     }
 
+    /**
+     * @return Member[]
+     */
     public function getOtherMembers(): array
     {
         $members = [];

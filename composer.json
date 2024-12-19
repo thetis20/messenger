@@ -71,6 +71,7 @@
         "symfony/polyfill-php82": "*"
     },
     "scripts": {
+        "phpstan": "vendor/bin/phpstan analyse src",
         "test": [
             "@database-test",
             "XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-html=coverage"],
@@ -131,6 +132,7 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.6",
+        "phpstan/phpstan": "^2.0",
         "phpunit/phpunit": "^9.5",
         "symfony/browser-kit": "7.1.*",
         "symfony/css-selector": "7.1.*",

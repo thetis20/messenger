@@ -19,11 +19,18 @@ class Discussion
         $this->name = $name;
     }
 
+    /**
+     * @return string[]
+     */
     public function getEmails(): array
     {
         return $this->emails;
     }
 
+    /**
+     * @param string[] $emails
+     * @return void
+     */
     public function setEmails(array $emails): void
     {
         $this->emails = $emails;

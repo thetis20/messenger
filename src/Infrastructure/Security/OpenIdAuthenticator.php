@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\FlashBagAwareSessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -33,12 +34,12 @@ class OpenIdAuthenticator extends AbstractAuthenticator implements Authenticatio
     private const STATE_SESSION_KEY = 'openid_state';
 
     public function __construct(
-        private UrlGeneratorInterface $urlGenerator,
-        private OpenIdClient          $openIdClient,
-        private RequestStack          $requestStack,
-        private MemberRepository      $memberRepository,
-        private string                $authorizationEndpoint,
-        private string                $clientId,
+        private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly OpenIdClient          $openIdClient,
+        private readonly RequestStack          $requestStack,
+        private readonly MemberRepository      $memberRepository,
+        private readonly string                $authorizationEndpoint,
+        private readonly string                $clientId,
     )
     {
     }
@@ -73,17 +74,17 @@ class OpenIdAuthenticator extends AbstractAuthenticator implements Authenticatio
 
         $responseData = json_decode($response, true);
         if (false === $responseData) {
-            throw new OpenIdServerException(sprintf('Can\'t parse json in response: %s', $response->getContent()));
+            throw new OpenIdServerException(sprintf('Can\'t parse json in response: %s', $response));
         }
 
         $jwtToken = $responseData['id_token'] ?? null;
         if (null === $jwtToken) {
-            throw new OpenIdServerException(sprintf('No access token found in response %s', $response->getContent()));
+            throw new OpenIdServerException(sprintf('No access token found in response %s', $response));
         }
 
         $refreshToken = $responseData['refresh_token'] ?? null;
         if (null === $refreshToken) {
-            throw new RuntimeException(sprintf('No refresh token found in response %s', $response->getContent()));
+            throw new RuntimeException(sprintf('No refresh token found in response %s', $response));
         }
 
         $userBadge = new UserBadge($jwtToken);
@@ -111,10 +112,13 @@ class OpenIdAuthenticator extends AbstractAuthenticator implements Authenticatio
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
-        $request->getSession()->getFlashBag()->add(
-            'error',
-            'An authentication error occured',
-        );
+        $session = $request->getSession();
+        if($session instanceof FlashBagAwareSessionInterface){
+            $session->getFlashBag()->add(
+                'error',
+                'An authentication error occurred',
+            );
+        }
 
         return new RedirectResponse($this->urlGenerator->generate('index'));
     }

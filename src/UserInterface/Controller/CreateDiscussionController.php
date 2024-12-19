@@ -3,14 +3,12 @@
 namespace App\UserInterface\Controller;
 
 use Messenger\Domain\Exception\CreateDiscussionForbiddenException;
-use Messenger\Domain\Request\CreateDiscussionRequest;
+use Messenger\Domain\RequestFactory\CreateDiscussionRequestFactory;
 use Messenger\Domain\UseCase\CreateDiscussion;
 use App\UserInterface\Form\DiscussionType;
 use App\UserInterface\Presenter\CreateDiscussionPresenter;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -19,13 +17,14 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-class CreateDiscussionController extends AbstractController
+final class CreateDiscussionController extends BaseController
 {
 
     public function __construct(
-        private readonly FormFactoryInterface  $formFactory,
-        private readonly Environment           $twig,
-        private readonly UrlGeneratorInterface $urlGenerator, )
+        private readonly FormFactoryInterface           $formFactory,
+        private readonly Environment                    $twig,
+        private readonly UrlGeneratorInterface          $urlGenerator,
+        private readonly CreateDiscussionRequestFactory $requestFactory)
     {
     }
 
@@ -43,12 +42,12 @@ class CreateDiscussionController extends AbstractController
     {
         $form = $this->formFactory->create(DiscussionType::class)->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $useCaseRequest = CreateDiscussionRequest::create(
+            $useCaseRequest = $this->requestFactory->create(
+                $this->getCurrentUser(),
                 $form->getData()->getName(),
                 $form->getData()->getEmails(),
-                $this->getUser()
             );
-            $presenter = new CreateDiscussionPresenter($this->urlGenerator, $this->getUser());
+            $presenter = new CreateDiscussionPresenter($this->urlGenerator, $this->getCurrentUser());
             $useCase->execute($useCaseRequest, $presenter);
             return $presenter->getResponse();
         }

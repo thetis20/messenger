@@ -5,11 +5,11 @@ namespace App\UserInterface\ViewModel;
 
 use Messenger\Domain\Entity\Discussion;
 use Messenger\Domain\Entity\Message;
-use Messenger\Domain\Entity\UserInterface;
 
 class SendMessageViewModel
 {
     private Discussion $discussion;
+    private Message $message;
 
     public function __construct(Discussion $discussion, Message $message)
     {

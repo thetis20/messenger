@@ -4,17 +4,16 @@ namespace App\UserInterface\ViewModel;
 
 
 use Messenger\Domain\Entity\Discussion;
-use Messenger\Domain\Entity\DiscussionMember;
 use Messenger\Domain\Entity\Member;
 use Messenger\Domain\Entity\Message;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Messenger\Domain\Entity\UserInterface;
 use Symfony\Component\Uid\Uuid;
 
 class MessageViewModel extends Message
 {
     private UserInterface $currentUser;
 
-    static public function create(Message $message, UserInterface $user)
+    static public function create(Message $message, UserInterface $user): MessageViewModel
     {
         return new self(
             $user,

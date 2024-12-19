@@ -16,10 +16,10 @@ use Symfony\Contracts\HttpClient\Exception\HttpExceptionInterface;
 final class JwtRefreshListener implements EventSubscriberInterface
 {
     public function __construct(
-        private TokenStorageInterface $tokenStorage,
-        private OpenIdClient $openIdClient,
-        private UrlGeneratorInterface $urlGenerator,
-        private UserProviderInterface $userProvider,
+        private readonly TokenStorageInterface $tokenStorage,
+        private readonly OpenIdClient $openIdClient,
+        private readonly UrlGeneratorInterface $urlGenerator,
+        private readonly UserProviderInterface $userProvider,
     ) {}
 
     public function onKernelRequest(RequestEvent $event): void
@@ -60,17 +60,17 @@ final class JwtRefreshListener implements EventSubscriberInterface
 
         $responseData = json_decode($response, true);
         if (false === $responseData) {
-            throw new RuntimeException(sprintf('Can\'t parse json in response: %s', $response->getContent()));
+            throw new RuntimeException(sprintf('Can\'t parse json in response: %s', $response));
         }
 
         $jwtToken = $responseData['id_token'] ?? null;
         if (null === $jwtToken) {
-            throw new RuntimeException(sprintf('No access token found in response %s', $response->getContent()));
+            throw new RuntimeException(sprintf('No access token found in response %s', $response));
         }
 
         $refreshToken = $responseData['refresh_token'] ?? null;
         if (null === $refreshToken) {
-            throw new RuntimeException(sprintf('No refresh token found in response %s', $response->getContent()));
+            throw new RuntimeException(sprintf('No refresh token found in response %s', $response));
         }
 
         $user = $this->userProvider->loadUserByIdentifier($jwtToken);
