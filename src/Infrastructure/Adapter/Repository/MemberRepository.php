@@ -17,7 +17,12 @@ class MemberRepository implements MemberGateway
     }
 
     /**
-     * @param array<string, mixed>|null $row
+     * @param array{
+     *     email: string,
+     *     useridentifier?: string,
+     *     userIdentifier?: string,
+     *     username: string
+     * }|null $row
      * @return Member|null
      */
     static function parse(?array $row): ?Member

@@ -1,22 +1,11 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     <fieldset style="max-width: 600px; margin: 4em auto">
-        <div class="alert alert-info" role="alert">
-            <h6 class="mb-1">{{ vm.discussion.name | e }}</h6>
-            <small>{{ vm.getOtherMembers()|map(m => m.username ?? m.email)|join(', ') }}</small>
-        </div>
+        {{ component('Discussion', {discussion: discussion, user: app.user, view: 'short'}) }}
 
         <div class="list-group">
-            {% for message in vm.messages %}
-                <div id="discussion_show_message_{{ message.id }}"
-                     data-type="discussion_show_message"
-                     data-author="{{ message.fromYou ? 'you' : '' }}"
-                     class="list-group-item list-group-item-action {{ message.fromYou ? 'text-end' : '' }}"
-                     aria-current="true">
-                    <h6 class="mb-1">{{ message.message | e }}</h6>
-                    <small>{{ message.createdAt|format_datetime('relative_short', 'short', locale: 'fr')}}</small>
-                    <small>{{ message.authorName | e }}</small>
-                </div>
+            {% for message in messages %}
+                {{ component('Message', {message: message, user: app.user}) }}
             {% endfor %}
         </div>
     </fieldset>

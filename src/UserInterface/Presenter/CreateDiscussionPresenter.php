@@ -2,10 +2,9 @@
 
 namespace App\UserInterface\Presenter;
 
-use Messenger\Domain\Entity\UserInterface;
+use Messenger\Domain\Entity\Discussion;
 use Messenger\Domain\Presenter\CreateDiscussionPresenterInterface;
 use Messenger\Domain\Response\CreateDiscussionResponse;
-use App\UserInterface\ViewModel\DiscussionViewModel;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -13,23 +12,22 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class CreateDiscussionPresenter implements CreateDiscussionPresenterInterface
 {
 
-    private DiscussionViewModel $viewModel;
+    private Discussion $discussion;
 
     public function __construct(
-        private readonly UrlGeneratorInterface $urlGenerator,
-        private readonly UserInterface $user)
+        private readonly UrlGeneratorInterface $urlGenerator)
     {
     }
 
     public function present(CreateDiscussionResponse $response): void
     {
-        $this->viewModel = DiscussionViewModel::create($response->getDiscussion(), $this->user);
+        $this->discussion = $response->getDiscussion();
     }
 
     public function getResponse(): Response
     {
         return new RedirectResponse($this->urlGenerator->generate('discussions_show', [
-            'discussionId' => $this->viewModel->getId(),
+            'discussionId' => $this->discussion->getId(),
         ]));
     }
 

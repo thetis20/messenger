@@ -37,7 +37,7 @@ class MessageRepository implements MessageGateway
             'member_email' => ':member_email',
             'created_at' => ':created_at',])
             ->setParameter('id', $message->getId())
-            ->setParameter('discussion_id', $message->getDiscussion()->getId()->toString())
+            ->setParameter('discussion_id', $message->getDiscussionId()->toString())
             ->setParameter('message', $message->getMessage())
             ->setParameter('member_email', $message->getAuthor()->getEmail())
             ->setParameter('created_at', $message->getCreatedAt()->format(\DateTime::ATOM))
@@ -89,7 +89,16 @@ class MessageRepository implements MessageGateway
     }
 
     /**
-     * @param array<string, mixed> $row
+     * @param array{
+     *     id: string|Uuid,
+     *     created_at: string,
+     *     message: string,
+     *     discussion_id: string|Uuid,
+     *     email: string,
+     *     useridentifier?: string,
+     *     userIdentifier?: string,
+     *     username: string
+     *     } $row
      * @return Message|null
      * @throws \DateMalformedStringException
      */
@@ -98,18 +107,12 @@ class MessageRepository implements MessageGateway
         if (!$row) {
             return null;
         }
-        if (!$row['id'] instanceof Uuid) {
-            $row['id'] = new Uuid($row['id']);
-        }
-        $createdAt = new \DateTime($row['created_at']);
-        return new Message($row['id'], $row['message'], MemberRepository::parse($row), null, $createdAt);
-    }
 
-    /**
-     * @throws Exception
-     */
-    public function findOneById(string $messageId): ?Message
-    {
-        return $this->findBy(['id' => $messageId])[0] ?? null;
+        return new Message(
+            $row['id'] instanceof Uuid ? $row['id'] : new Uuid($row['id']),
+            $row['message'],
+            MemberRepository::parse($row),
+            $row['discussion_id'] instanceof Uuid ? $row['discussion_id'] : new Uuid($row['discussion_id']),
+            new \DateTime($row['created_at']));
     }
 }

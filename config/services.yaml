@@ -34,7 +34,7 @@ services:
             - '../src/Infrastructure/{Test}'
     App\UserInterface\Controller\:
         resource: '../src/UserInterface/Controller'
-        tags: ['controller.service_arguments']
+        tags: [ 'controller.service_arguments' ]
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
@@ -57,21 +57,21 @@ services:
         $algo: '%env(KEYCLOAK_ALGO)%'
         $publicKey: '%env(KEYCLOAK_PK)%'
     
-    Messenger\Domain\UseCase\CreateDiscussion:  
+    Messenger\Domain\UseCase\CreateDiscussion:
         autowire: true
-    Messenger\Domain\UseCase\PaginateDiscussion:  
+    Messenger\Domain\UseCase\PaginateDiscussion:
         autowire: true
-    Messenger\Domain\UseCase\ShowDiscussion:  
+    Messenger\Domain\UseCase\ShowDiscussion:
         autowire: true
-    Messenger\Domain\UseCase\SendMessage:  
+    Messenger\Domain\UseCase\SendMessage:
         autowire: true
-    Messenger\Domain\RequestFactory\CreateDiscussionRequestFactory:  
+    Messenger\Domain\RequestFactory\CreateDiscussionRequestFactory:
         autowire: true
-    Messenger\Domain\RequestFactory\PaginateDiscussionRequestFactory:  
+    Messenger\Domain\RequestFactory\PaginateDiscussionRequestFactory:
         autowire: true
-    Messenger\Domain\RequestFactory\ShowDiscussionRequestFactory:  
+    Messenger\Domain\RequestFactory\ShowDiscussionRequestFactory:
         autowire: true
-    Messenger\Domain\RequestFactory\SendMessageRequestFactory:  
+    Messenger\Domain\RequestFactory\SendMessageRequestFactory:
         autowire: true
     
     Messenger\Domain\Gateway\DiscussionGateway: '@App\Infrastructure\Adapter\Repository\DiscussionRepository'

@@ -29,7 +29,7 @@ final class PaginateDiscussionController extends BaseController
      */
     public function __invoke(Request $request, Security $security, PaginateDiscussion $useCase): Response
     {
-        $presenter = new PaginateDiscussionPresenter($this->twig, $this->getCurrentUser());
+        $presenter = new PaginateDiscussionPresenter($this->twig);
         $useCaseRequest = $this->requestFactory->create(
             $this->getCurrentUser(),
             [

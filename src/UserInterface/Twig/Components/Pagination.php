@@ -8,14 +8,8 @@ use Symfony\UX\LiveComponent\DefaultActionTrait;
 #[AsLiveComponent]
 final class Pagination
 {
-    public int $totalPages;
-    public int $page;
-
-    public function __construct(int $page = 1, int $totalPages = 1)
-    {
-        $this->page = $page;
-        $this->totalPages = $totalPages;
-    }
+    public int $totalPages = 1;
+    public int $page = 1;
 
     public function hasPreviousPage(): bool
     {

@@ -1,0 +1,9 @@
+<div id="discussion_show_message_{{ message.id }}"
+     data-type="discussion_show_message"
+     data-author="{{ this.fromYou ? 'you' : '' }}"
+     class="list-group-item {{ this.fromYou ? 'text-end' : '' }}"
+     aria-current="true">
+    <h6 class="mb-1">{{ message.message | e }}</h6>
+    <small>{{ message.createdAt|format_datetime('relative_short', 'short', locale: 'fr')}}</small>
+    <small>{{ this.authorName | e }}</small>
+</div>

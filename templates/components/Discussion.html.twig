@@ -1,0 +1,16 @@
+{% if(view == 'short') %}
+    <div class="alert alert-info" role="alert">
+        <h6 class="mb-1">{{ discussion.name | e }}</h6>
+        <small>{{ this.getOtherMembers()|map(m => m.username ?? m.email)|join(', ') }}</small>
+    </div>
+{% else %}
+    <a id="discussion_list_item_{{ discussion.id }}"
+       href="/discussions/{{ discussion.id }}"
+       data-type="discussion_list_item"
+       data-seen="{{ this.isSeen() ? 'true': 'false' }}"
+       class="list-group-item list-group-item-action {{ this.isSeen() ? 'list-group-item-primary': '' }}"
+       aria-current="true">
+        <h6 class="mb-1">{{ discussion.name | e }}</h6>
+        <small>{{ this.getOtherMembers()|map(m => m.username ?? m.email)|join(', ') }}</small>
+    </a>
+{% endif %}

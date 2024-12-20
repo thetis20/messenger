@@ -4,11 +4,12 @@ namespace DataFixtures;
 
 use App\Infrastructure\Adapter\Repository\DiscussionRepository;
 use App\Infrastructure\Adapter\Repository\MemberRepository;
+use App\Tests\Infrastructure\MemberRepositoryTest;
 use App\Tests\Integration\PaginateDiscussionTest;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-final class PaginateDiscussionFixtures extends Fixture
+final class MemberRepositoryFixtures extends Fixture
 {
 
     public function __construct(
@@ -19,13 +20,10 @@ final class PaginateDiscussionFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $data = PaginateDiscussionTest::data();
+        $data = MemberRepositoryTest::data();
 
         foreach ($data['members'] as $member) {
             $this->memberRepository->insert($member);
-        }
-        foreach ($data['discussions'] as $discussion) {
-            $this->discussionRepository->insert($discussion);
         }
     }
 }

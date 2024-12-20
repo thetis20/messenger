@@ -120,7 +120,9 @@ class DiscussionRepository implements DiscussionGateway
             $qb->setMaxResults($options['limit']);
         }
 
-        if (isset($options['page']) && isset($options['limit'])) {
+        if (isset($options['offset'])) {
+            $qb->setFirstResult($options['offset']);
+        } elseif (isset($options['page']) && isset($options['limit'])) {
             $qb->setFirstResult(($options['page'] - 1) * $options['limit']);
         }
 
@@ -152,10 +154,10 @@ class DiscussionRepository implements DiscussionGateway
     }
 
     /**
-     * @param array<string, mixed> $row
+     * @param array{id: string|Uuid,name: string, discussionMembers: array<array>}|null $row
      * @return Discussion|null
      */
-    static public function parse(array $row): ?Discussion
+    static public function parse(?array $row): ?Discussion
     {
         if (!$row) {
             return null;
@@ -165,20 +167,16 @@ class DiscussionRepository implements DiscussionGateway
         }
         $discussion = new Discussion($row['id'], $row['name']);
         foreach ($row['discussionMembers'] as $item) {
-            if (!$item instanceof DiscussionMember) {
-                if (!isset($item['member'])) {
-                    $item['member'] = MemberRepository::parse($item);
-                }
-                $discussion->addMember($item['member'], $item['seen']);
-                continue;
+            if (!isset($item['member'])) {
+                $item['member'] = MemberRepository::parse($item);
             }
-            $discussion->addMember($item->getMember(), $item->isSeen());
+            $discussion->addMember($item['member'], $item['seen']);
         }
         return $discussion;
     }
 
-    public function find(string $discussionId): ?Discussion
+    public function find(string $id): ?Discussion
     {
-        return $this->findBy(['id' => $discussionId])[0] ?? null;
+        return $this->findBy(['id' => $id])[0] ?? null;
     }
 }
