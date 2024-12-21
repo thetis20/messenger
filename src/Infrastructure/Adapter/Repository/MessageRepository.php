@@ -83,6 +83,26 @@ class MessageRepository implements MessageGateway
     {
         $qb = $this->generateSelectQueryBuilder($filters);
         $qb->select('*');
+
+        if (isset($options['limit'])) {
+            $qb->setMaxResults($options['limit']);
+        }
+
+        if (isset($options['offset'])) {
+            $qb->setFirstResult($options['offset']);
+        }
+
+        if (is_array($options['orderBy'] ?? false)) {
+            foreach ($options['orderBy'] as $field => $direction) {
+                switch ($field) {
+                    case 'createdAt':
+                        $qb->addOrderBy('created_at', $direction);
+                        break;
+                    default:
+                        $qb->addOrderBy($field, $direction);
+                }
+            }
+        }
         $rows = $qb->fetchAllAssociative();
 
         return array_map([self::class, 'parse'], $rows);
@@ -98,11 +118,11 @@ class MessageRepository implements MessageGateway
      *     useridentifier?: string,
      *     userIdentifier?: string,
      *     username: string
-     *     } $row
+     *     }|null $row
      * @return Message|null
      * @throws \DateMalformedStringException
      */
-    static public function parse(array $row): ?Message
+    static public function parse(?array $row): ?Message
     {
         if (!$row) {
             return null;

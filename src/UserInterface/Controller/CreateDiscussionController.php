@@ -47,7 +47,7 @@ final class CreateDiscussionController extends BaseController
                 $form->getData()->getName(),
                 $form->getData()->getEmails(),
             );
-            $presenter = new CreateDiscussionPresenter($this->urlGenerator, $this->getCurrentUser());
+            $presenter = new CreateDiscussionPresenter($this->urlGenerator);
             $useCase->execute($useCaseRequest, $presenter);
             return $presenter->getResponse();
         }

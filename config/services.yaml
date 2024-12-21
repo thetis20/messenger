@@ -65,6 +65,8 @@ services:
         autowire: true
     Messenger\Domain\UseCase\SendMessage:
         autowire: true
+    Messenger\Domain\UseCase\MarkAsDiscussion:
+        autowire: true
     Messenger\Domain\RequestFactory\CreateDiscussionRequestFactory:
         autowire: true
     Messenger\Domain\RequestFactory\PaginateDiscussionRequestFactory:
@@ -72,6 +74,8 @@ services:
     Messenger\Domain\RequestFactory\ShowDiscussionRequestFactory:
         autowire: true
     Messenger\Domain\RequestFactory\SendMessageRequestFactory:
+        autowire: true
+    Messenger\Domain\RequestFactory\MarkAsDiscussionRequestFactory:
         autowire: true
     
     Messenger\Domain\Gateway\DiscussionGateway: '@App\Infrastructure\Adapter\Repository\DiscussionRepository'

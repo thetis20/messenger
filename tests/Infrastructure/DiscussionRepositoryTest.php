@@ -19,16 +19,6 @@ use Symfony\Component\Uid\Uuid;
 
 class DiscussionRepositoryTest extends KernelTestCase
 {
-    private DiscussionRepository $discussionRepository;
-
-    protected function setUp(): void
-    {
-        self::bootKernel();
-
-        $container = static::getContainer();
-
-        $this->discussionRepository = $container->get(DiscussionRepository::class);
-    }
 
     protected static function createClient(array $options = [], array $server = []): KernelBrowser
     {

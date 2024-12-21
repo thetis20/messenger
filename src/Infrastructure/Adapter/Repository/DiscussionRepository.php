@@ -122,8 +122,6 @@ class DiscussionRepository implements DiscussionGateway
 
         if (isset($options['offset'])) {
             $qb->setFirstResult($options['offset']);
-        } elseif (isset($options['page']) && isset($options['limit'])) {
-            $qb->setFirstResult(($options['page'] - 1) * $options['limit']);
         }
 
         $rows = $qb->fetchAllAssociative();

@@ -9,7 +9,7 @@
         {% if page > 3 %}
             <a disabled="disabled" type="button" class="btn btn-outline-primary disabled">...</a>
         {% endif %}
-        {% if this.hasPreviousPage() and this.previousPage != 1 %}
+        {% if this.previousPage not in [1, null] %}
             <a
                 href="?page={{ this.previousPage }}"
                 type="button"
@@ -20,12 +20,12 @@
         {% if page != 1 and page != totalPages %}
             <a disabled="disabled" type="button" class="btn btn-primary">{{ page }}</a>
         {% endif %}
-        {% if this.hasNextPage() and this.nextPage != this.totalPages %}
+        {% if this.nextPage not in [this.totalPages, null] %}
             <a
-                href="?page={{ this.nextPage }}"
+                href="?page={{ this.getNextPage() }}"
                 type="button"
-                class="btn {{ this.page == this.nextPage ? 'btn-primary':'btn-outline-primary' }}">
-                {{ this.nextPage }}
+                class="btn {{ this.page == this.getNextPage() ? 'btn-primary':'btn-outline-primary' }}">
+                {{ this.getNextPage() }}
             </a>
         {% endif %}
         {% if totalPages > 3 and totalPages > page + 2 %}

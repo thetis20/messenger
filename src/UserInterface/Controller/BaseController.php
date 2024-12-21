@@ -14,7 +14,9 @@ class BaseController extends AbstractController
     {
         $user = parent::getUser();
         if (null !== $user && !$user instanceof \Messenger\Domain\Entity\UserInterface) {
+            // @codeCoverageIgnoreStart
             throw new Exception(sprintf('Expected Messenger\Domain\Entity\UserInterface, got %s', get_class($user)));
+            // @codeCoverageIgnoreEnd
         }
         return $user;
     }

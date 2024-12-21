@@ -1,7 +1,7 @@
 <div id="discussion_show_message_{{ message.id }}"
      data-type="discussion_show_message"
      data-author="{{ this.fromYou ? 'you' : '' }}"
-     class="list-group-item {{ this.fromYou ? 'text-end' : '' }}"
+     class="alert alert-light w-75 {{ this.fromYou ? 'text-end align-self-end' : 'align-self-start' }}"
      aria-current="true">
     <h6 class="mb-1">{{ message.message | e }}</h6>
     <small>{{ message.createdAt|format_datetime('relative_short', 'short', locale: 'fr')}}</small>

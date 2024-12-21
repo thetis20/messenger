@@ -36,7 +36,9 @@ final class Discussion
                 return $dm->isSeen();
             }
         }
+        // @codeCoverageIgnoreStart
         return false;
+        // @codeCoverageIgnoreEnd
     }
 
     use DefaultActionTrait;

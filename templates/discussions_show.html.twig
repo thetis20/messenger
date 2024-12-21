@@ -1,21 +1,60 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <fieldset style="max-width: 600px; margin: 4em auto">
+    <fieldset class="d-flex vh-100 flex-column">
         {{ component('Discussion', {discussion: discussion, user: app.user, view: 'short'}) }}
 
-        <div class="list-group">
-            {% for message in messages %}
+        <div class="d-flex flex-fill flex-column overflow-auto px-3" id="messages">
+            {% if(hasNextPage) %}
+                <button class="btn btn-light mb-4" id="more-messages"
+                        data-discussion-id="{{ discussion.id }}"
+                        data-next-page="{{ nextPage }}">
+                    See more
+                </button>
+            {% endif %}
+            {% for message in messages|reverse %}
                 {{ component('Message', {message: message, user: app.user}) }}
             {% endfor %}
         </div>
+        <div>
+            {{ form_start(form) }}
+
+            {{ form_rest(form) }}
+
+            <Button type="submit" class="btn btn-success">Send</Button>
+
+            {{ form_end(form) }}
+        </div>
     </fieldset>
-    <fieldset style="max-width: 600px; margin: 4em auto">
-        {{ form_start(form) }}
+    <script>
+        function load() {
+            const e = document.getElementById("messages");
 
-        {{ form_rest(form) }}
+            $('#more-messages').click(function () {
+                const {nextPage, discussionId} = $('#more-messages')[0].dataset
+                $.get(`/discussions/${discussionId}?view=light&page=${nextPage}`).then(res => {
+                    const element = $(res)
+                    const oldScrollHeight = e.scrollHeight
+                    $('#more-messages').remove()
+                    $('#messages').prepend(element.find('#messages').html())
+                    e.scrollTop = e.scrollHeight - oldScrollHeight
+                    load()
+                })
+            })
+        }
 
-        <Button type="submit" class="btn btn-success">Send</Button>
+        function markAsSeen() {
+            $.ajax({
+                type: "POST",
+                url: '{{ path('api_discussions_markAs', {discussionId: discussion.id})|escape('js') }}',
+                dataType: 'json'
+            });
+        }
 
-        {{ form_end(form) }}
-    </fieldset>
+        $(document).ready(function () {
+            const element = document.getElementById("messages");
+            element.scrollTop = element.scrollHeight;
+            markAsSeen()
+            load()
+        })
+    </script>
 {% endblock %}

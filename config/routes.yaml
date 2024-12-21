@@ -2,6 +2,11 @@ discussions_create:
     path: /discussions/create
     methods: GET|POST
     controller: App\UserInterface\Controller\CreateDiscussionController
+api_discussions_markAs:
+    path: /api/discussions/{discussionId}/markAsSeen
+    methods: POST
+    controller: App\UserInterface\Controller\ApiDiscussionMarkAsSeenController
+    format: json
 discussions_paginate:
     path: /discussions/list
     methods: GET

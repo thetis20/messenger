@@ -6,6 +6,7 @@ use Messenger\Domain\Entity\Discussion;
 use Messenger\Domain\Entity\Message;
 use Messenger\Domain\Presenter\ShowDiscussionPresenterInterface;
 use Messenger\Domain\Response\ShowDiscussionResponse;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 use Twig\Error\LoaderError;
@@ -19,6 +20,8 @@ class ShowDiscussionPresenter implements ShowDiscussionPresenterInterface
      * @var Message[]
      */
     private array $messages;
+    private bool $hasNextPage;
+    private ?int $nextPage;
 
     public function __construct(private readonly Environment $twig)
     {
@@ -28,6 +31,8 @@ class ShowDiscussionPresenter implements ShowDiscussionPresenterInterface
     {
         $this->discussion = $response->getDiscussion();
         $this->messages = $response->getMessages();
+        $this->hasNextPage = $response->hasNextPage();
+        $this->nextPage = $response->getNextPage();
     }
 
     /**
@@ -42,6 +47,8 @@ class ShowDiscussionPresenter implements ShowDiscussionPresenterInterface
         return new Response($this->twig->render('discussions_show.html.twig', array_merge($context, [
             'discussion' => $this->discussion,
             'messages' => $this->messages,
+            'hasNextPage' => $this->hasNextPage,
+            'nextPage' => $this->nextPage,
         ])));
     }
 

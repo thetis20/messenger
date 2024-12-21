@@ -9,7 +9,6 @@ use App\Infrastructure\Security\User;
 use Messenger\Domain\Entity\Member;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -257,7 +256,6 @@ class PaginateDiscussionTest extends WebTestCase
             TokensBag::class => new TokensBag('accessToken', 'refreshToken', time() + 3600),
         ]);
         $client->request(Request::METHOD_GET, '/discussions/list?page=' . $page);
-
         $this->assertResponseIsSuccessful();
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
 

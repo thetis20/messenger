@@ -60,7 +60,7 @@ class ShowDiscussionController extends BaseController
         SendMessage    $sendMessageUseCase,
     ): Response
     {
-        $showDiscussionPresenter = new ShowDiscussionPresenter($this->twig, $this->getCurrentUser());
+        $showDiscussionPresenter = new ShowDiscussionPresenter($this->twig);
         $showDiscussionRequest = $this->showDiscussionRequestFactory->create(
             $this->getCurrentUser(),
             $discussionId,
