@@ -9,8 +9,6 @@ use Messenger\Domain\UseCase\PaginateDiscussion;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\Transport\TransportInterface;
-use Symfony\Component\Mime\Email;
 use Twig\Environment;
 
 final class PaginateDiscussionController extends BaseController
@@ -18,8 +16,7 @@ final class PaginateDiscussionController extends BaseController
 
     public function __construct(
         private readonly Environment                      $twig,
-        private readonly PaginateDiscussionRequestFactory $requestFactory,
-        private readonly TransportInterface               $transport)
+        private readonly PaginateDiscussionRequestFactory $requestFactory)
     {
     }
 

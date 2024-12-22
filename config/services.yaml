@@ -81,6 +81,7 @@ services:
     Messenger\Domain\Gateway\DiscussionGateway: '@App\Infrastructure\Adapter\Repository\DiscussionRepository'
     Messenger\Domain\Gateway\MemberGateway: '@App\Infrastructure\Adapter\Repository\MemberRepository'
     Messenger\Domain\Gateway\MessageGateway: '@App\Infrastructure\Adapter\Repository\MessageRepository'
+    Messenger\Domain\Gateway\NotificationGateway: '@App\Infrastructure\Adapter\Mailer'
 
     DataFixtures\:
         resource: '../src/Infrastructure/Doctrine/DataFixtures'

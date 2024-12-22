@@ -2,6 +2,8 @@
 
 namespace App\Tests\Integration;
 
+use App\Infrastructure\Adapter\Repository\DiscussionRepository;
+use App\Infrastructure\Adapter\Repository\MemberRepository;
 use App\Infrastructure\Security\Dto\TokensBag;
 use App\Infrastructure\Security\User;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
@@ -15,6 +17,19 @@ class CreateDiscussionTest extends WebTestCase
     protected static function createClient(array $options = [], array $server = []): KernelBrowser
     {
         return parent::createClient(array_merge($options, ['environment' => 'test']), $server);
+    }
+
+    static public function data(): array
+    {
+        $members = [
+            MemberRepository::parse([
+                'email' => 'arnaud+create-discussion@email.com',
+                'userIdentifier' => 'arnaud+create-discussion',
+                'username' => 'Arnaud'
+            ])];
+        return [
+            'members' => $members
+        ];
     }
     public function testSuccessful()
     {
@@ -45,8 +60,8 @@ class CreateDiscussionTest extends WebTestCase
         $form = $crawler->filter('form')->form();
         $client->submit($form, [
             'discussion[name]' => 'name',
-            'discussion[emails][0]' => 'member1@mail.com',
-            'discussion[emails][1]' => 'member2@mail.com',
+            'discussion[emails][0]' => 'david+create-discussion@email.com',
+            'discussion[emails][1]' => 'arnaud+create-discussion@email.com'
         ]);
         $this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
     }
