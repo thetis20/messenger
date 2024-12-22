@@ -13,11 +13,7 @@ use Doctrine\Persistence\ObjectManager;
 final class MemberRepositoryFixtures extends Fixture
 {
 
-    public function __construct(
-        private readonly MemberRepository     $memberRepository,
-        private readonly DiscussionRepository $discussionRepository,
-        private readonly MessageRepository    $messageRepository,
-    )
+    public function __construct(private readonly MemberRepository $memberRepository)
     {
     }
 

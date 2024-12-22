@@ -22,5 +22,10 @@ final class Message
         return $this->message->getAuthor()->getEmail() === $this->user->getEmail() ? 'you' : $this->message->getAuthor()->getUsername();
     }
 
+    public function canDelete(): bool
+    {
+        return !$this->message->isDeleted() && $this->message->getAuthor()->getEmail() === $this->user->getEmail();
+    }
+
     use DefaultActionTrait;
 }

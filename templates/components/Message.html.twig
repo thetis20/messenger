@@ -1,9 +1,60 @@
-<div id="discussion_show_message_{{ message.id }}"
-     data-type="discussion_show_message"
-     data-author="{{ this.fromYou ? 'you' : '' }}"
-     class="alert alert-light w-75 {{ this.fromYou ? 'text-end align-self-end' : 'align-self-start' }}"
-     aria-current="true">
-    <h6 class="mb-1">{{ message.message | e }}</h6>
-    <small>{{ message.createdAt|format_datetime('relative_short', 'short', locale: 'fr')}}</small>
-    <small>{{ this.authorName | e }}</small>
+<div id="message-{{ message.id }}" class="d-flex flex-column">
+    {% if(not message.isDeleted) %}
+        <div data-type="discussion_show_message"
+             data-author="{{ this.fromYou ? 'you' : '' }}"
+             class="alert alert-light w-75 {{ this.fromYou ? 'text-end align-self-end' : 'align-self-start' }}"
+             aria-current="true">
+            <h6 class="mb-1">{{ message.message | e }}</h6>
+            <small>{{ message.createdAt|format_datetime('relative_short', 'short', locale: 'fr') }}</small>
+            <small>{{ this.authorName | e }}</small>
+        </div>
+    {% else %}
+        <small class="text-secondary {{ this.fromYou ? 'text-end align-self-end' : 'align-self-start' }}">message deleted</small>
+    {% endif %}
+    {% if(this.canDelete) %}
+        <Button id="message-{{ message.id }}-delete"
+                style="margin: -.5rem .5rem 1rem;"
+                class="link-danger bg-none border-none align-self-end"
+                data-bs-toggle="modal"
+                data-bs-target="#message-{{ message.id }}-delete-modal"
+        >
+            Delete
+        </Button>
+        <div class="modal fade" tabindex="-1" id="message-{{ message.id }}-delete-modal"
+             aria-labelledby="message-{{ message.id }}-delete-modal-label"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="message-{{ message.id }}-delete-modal-label">Confirm Deletion</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete this message?</p>
+                        <p>This action cannot be undone.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" id="message-{{ message.id }}-delete-btn">Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function () {
+                $('#message-{{ message.id }}-delete-btn').click(function () {
+                    $.ajax({
+                        type: "DELETE",
+                        url: '{{ path('api_messages_delete', {messageId: message.id})|escape('js') }}',
+                    }).then(function (response) {
+                        $('#message-{{ message.id }}').html($(response).html())
+                        $('.modal-open').removeClass('modal-open')
+                        $('.modal-backdrop').remove()
+                    });
+                })
+            })
+        </script>
+    {% endif %}
 </div>

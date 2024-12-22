@@ -35,12 +35,16 @@ class MessageRepository implements MessageGateway
             'discussion_id' => ':discussion_id',
             'message' => ':message',
             'member_email' => ':member_email',
-            'created_at' => ':created_at',])
+            'created_at' => ':created_at',
+            'updated_at' => ':updated_at',
+            'deleted' => ':deleted'])
             ->setParameter('id', $message->getId())
             ->setParameter('discussion_id', $message->getDiscussionId()->toString())
             ->setParameter('message', $message->getMessage())
             ->setParameter('member_email', $message->getAuthor()->getEmail())
             ->setParameter('created_at', $message->getCreatedAt()->format(\DateTime::ATOM))
+            ->setParameter('updated_at', $message->getUpdatedAt()->format(\DateTime::ATOM))
+            ->setParameter('deleted', $message->isDeleted(), ParameterType::BOOLEAN)
             ->executeStatement();
     }
 
@@ -112,12 +116,14 @@ class MessageRepository implements MessageGateway
      * @param array{
      *     id: string|Uuid,
      *     created_at: string,
+     *     updated_at: string,
      *     message: string,
      *     discussion_id: string|Uuid,
      *     email: string,
      *     useridentifier?: string,
      *     userIdentifier?: string,
-     *     username: string
+     *     username: string,
+     *     deleted: bool
      *     }|null $row
      * @return Message|null
      * @throws \DateMalformedStringException
@@ -133,6 +139,28 @@ class MessageRepository implements MessageGateway
             $row['message'],
             MemberRepository::parse($row),
             $row['discussion_id'] instanceof Uuid ? $row['discussion_id'] : new Uuid($row['discussion_id']),
-            new \DateTime($row['created_at']));
+            new \DateTime($row['created_at']),
+            new \DateTime($row['updated_at']),
+            $row['deleted']);
+    }
+
+    public function update(Message $message): void
+    {
+        $queryBuilder = $this->conn->createQueryBuilder();
+        $queryBuilder->update('messages')
+            ->set('message', ':message')
+            ->set('updated_at', ':updated_at')
+            ->set('deleted', ':deleted')
+            ->where('id = :id')
+            ->setParameter('message', $message->getMessage())
+            ->setParameter('updated_at', $message->getUpdatedAt()->format(\DateTime::ATOM))
+            ->setParameter('deleted', $message->isDeleted(), ParameterType::BOOLEAN)
+            ->setParameter('id', $message->getId())
+            ->executeStatement();
+    }
+
+    public function find(string $id): ?Message
+    {
+        return $this->findBy(['id' => $id])[0] ?? null;
     }
 }

@@ -52,6 +52,8 @@ class MessageRepositoryTest extends KernelTestCase
         $messages = [MessageRepository::parse([
             'id' => '006fa199-1b70-4942-8333-29b6de1861ff',
             'created_at' => '2024-12-18 21:27:14.000000',
+            'updated_at' => '2024-12-18 21:27:14.000000',
+            'deleted' => false,
             'message' => 'Hello bro !',
             'discussion_id' => $discussions[0]->getId(),
             'email' => $members[0]->getEmail(),
@@ -60,6 +62,8 @@ class MessageRepositoryTest extends KernelTestCase
         ]), MessageRepository::parse([
             'id' => 'f49ff730-9a92-480f-9c33-735362482aa6',
             'created_at' => '2024-12-18 21:27:14.000000',
+            'updated_at' => '2024-12-18 21:27:14.000000',
+            'deleted' => false,
             'message' => 'Hello bro !',
             'discussion_id' => $discussions[0]->getId(),
             'email' => $members[1]->getEmail(),
