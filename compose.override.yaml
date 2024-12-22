@@ -5,17 +5,14 @@ services:
     ports:
       - "5432:5432"
 ###< doctrine/doctrine-bundle ###
-
-###> symfony/mailer ###
-  mailer:
-    image: axllent/mailpit
-    ports:
-      - "1025"
-      - "8025"
-    environment:
-      MP_SMTP_AUTH_ACCEPT_ANY: 1
-      MP_SMTP_AUTH_ALLOW_INSECURE: 1
-###< symfony/mailer ###
+  
+###> mailcatcher ###
+  mailcatcher:
+    image: dockage/mailcatcher:0.9.0
+    ports: 
+     - '1080:1080'
+     - '1025:1025'
+###< mailcatcher ###
 
 ###> keycloak ###
   keycloak:
