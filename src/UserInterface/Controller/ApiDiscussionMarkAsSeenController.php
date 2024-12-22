@@ -9,7 +9,6 @@ use Messenger\Domain\Exception\NotAMemberOfTheDiscussionException;
 use Messenger\Domain\RequestFactory\MarkAsDiscussionRequestFactory;
 use Messenger\Domain\UseCase\MarkAsDiscussion;
 use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -25,7 +24,7 @@ final class ApiDiscussionMarkAsSeenController extends BaseController
      * @param Request $request
      * @param Security $security
      * @param MarkAsDiscussion $useCase
-     * @return JsonResponse
+     * @return Response
      * @throws DiscussionNotFoundException
      * @throws MarkAsDiscussionForbiddenException
      * @throws NotAMemberOfTheDiscussionException

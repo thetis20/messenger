@@ -60,6 +60,8 @@ class ShowDiscussionTest extends WebTestCase
         $messages = [MessageRepository::parse([
             'id' => Uuid::v4(),
             'created_at' => '2024-12-18 21:27:14.000000',
+            'updated_at' => '2024-12-18 21:27:14.000000',
+            'deleted' => false,
             'message' => 'Hello bro !',
             'discussion_id' => $discussions[0]->getId(),
             'email' => $members[0]->getEmail(),
@@ -69,6 +71,8 @@ class ShowDiscussionTest extends WebTestCase
             MessageRepository::parse([
                 'id' => Uuid::v4(),
                 'created_at' => '2024-12-18 21:27:14.000000',
+                'updated_at' => '2024-12-18 21:27:14.000000',
+                'deleted' => false,
                 'message' => 'What\'s up?',
                 'discussion_id' => $discussions[0]->getId(),
                 'email' => $members[1]->getEmail(),
@@ -78,6 +82,8 @@ class ShowDiscussionTest extends WebTestCase
             MessageRepository::parse([
                 'id' => Uuid::v4(),
                 'created_at' => '2024-12-18 21:27:14.000000',
+                'updated_at' => '2024-12-18 21:27:14.000000',
+                'deleted' => false,
                 'message' => 'Fine and you ?',
                 'discussion_id' => $discussions[0]->getId(),
                 'email' => $members[2]->getEmail(),

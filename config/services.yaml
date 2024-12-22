@@ -67,6 +67,8 @@ services:
         autowire: true
     Messenger\Domain\UseCase\MarkAsDiscussion:
         autowire: true
+    Messenger\Domain\UseCase\DeleteMessage:
+        autowire: true
     Messenger\Domain\RequestFactory\CreateDiscussionRequestFactory:
         autowire: true
     Messenger\Domain\RequestFactory\PaginateDiscussionRequestFactory:
@@ -77,11 +79,14 @@ services:
         autowire: true
     Messenger\Domain\RequestFactory\MarkAsDiscussionRequestFactory:
         autowire: true
+    Messenger\Domain\RequestFactory\DeleteMessageRequestFactory:
+        autowire: true
     
     Messenger\Domain\Gateway\DiscussionGateway: '@App\Infrastructure\Adapter\Repository\DiscussionRepository'
     Messenger\Domain\Gateway\MemberGateway: '@App\Infrastructure\Adapter\Repository\MemberRepository'
     Messenger\Domain\Gateway\MessageGateway: '@App\Infrastructure\Adapter\Repository\MessageRepository'
     Messenger\Domain\Gateway\NotificationGateway: '@App\Infrastructure\Adapter\Mailer'
+    Messenger\Domain\Gateway\LoggerInterface: '@App\Infrastructure\Adapter\Logger'
 
     DataFixtures\:
         resource: '../src/Infrastructure/Doctrine/DataFixtures'

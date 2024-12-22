@@ -7,7 +7,6 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Messenger\Domain\Entity\Discussion;
-use Messenger\Domain\Entity\DiscussionMember;
 use Messenger\Domain\Gateway\DiscussionGateway;
 use Symfony\Component\Uid\Uuid;
 

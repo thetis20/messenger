@@ -7201,16 +7201,16 @@
         },
         {
             "name": "thetis20/messenger-domain",
-            "version": "1.0.12",
+            "version": "1.0.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thetis20/messenger-domain.git",
-                "reference": "0177c6ba9a898700e2b653165b97fa9c1c943ebe"
+                "reference": "9da555a33644475262fd9e8b0e4b6a77f025dd1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thetis20/messenger-domain/zipball/0177c6ba9a898700e2b653165b97fa9c1c943ebe",
-                "reference": "0177c6ba9a898700e2b653165b97fa9c1c943ebe",
+                "url": "https://api.github.com/repos/thetis20/messenger-domain/zipball/9da555a33644475262fd9e8b0e4b6a77f025dd1f",
+                "reference": "9da555a33644475262fd9e8b0e4b6a77f025dd1f",
                 "shasum": ""
             },
             "require": {
@@ -7246,9 +7246,9 @@
             "description": "domain of messenger application",
             "support": {
                 "issues": "https://github.com/thetis20/messenger-domain/issues",
-                "source": "https://github.com/thetis20/messenger-domain/tree/1.0.12"
+                "source": "https://github.com/thetis20/messenger-domain/tree/1.0.13"
             },
-            "time": "2024-12-22T18:35:18+00:00"
+            "time": "2024-12-22T21:32:12+00:00"
         },
         {
             "name": "twig/extra-bundle",

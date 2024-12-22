@@ -7,6 +7,10 @@ api_discussions_markAs:
     methods: POST
     controller: App\UserInterface\Controller\ApiDiscussionMarkAsSeenController
     format: json
+api_messages_delete:
+    path: /api/messages/{messageId}
+    methods: DELETE
+    controller: App\UserInterface\Controller\ApiMessagesDeleteController
 discussions_paginate:
     path: /discussions/list
     methods: GET
