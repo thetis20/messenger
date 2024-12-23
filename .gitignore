@@ -1,6 +1,7 @@
 .idea
 .DS_Store
 /coverage/
+.env
 
 ###> symfony/framework-bundle ###
 /.env.local
