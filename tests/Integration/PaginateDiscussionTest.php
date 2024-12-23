@@ -59,7 +59,10 @@ class PaginateDiscussionTest extends WebTestCase
                     'member' => $members[2],
                     'seen' => false,
                 ]
-            ]
+            ],
+            'email' => $members[0]->getEmail(),
+            'username' => $members[0]->getUsername(),
+            'userIdentifier' => $members[0]->getUserIdentifier(),
         ]),
             DiscussionRepository::parse([
                 'id' => 'dc14b741-1c86-480c-973c-797e1701cbe0',
@@ -77,7 +80,10 @@ class PaginateDiscussionTest extends WebTestCase
                         'member' => $members[3],
                         'seen' => false,
                     ]
-                ]
+                ],
+                'email' => $members[0]->getEmail(),
+                'username' => $members[0]->getUsername(),
+                'userIdentifier' => $members[0]->getUserIdentifier(),
             ]),
             DiscussionRepository::parse([
                 'id' => '0ff56bf5-6904-418b-8951-4f33ff31baff',
@@ -95,7 +101,10 @@ class PaginateDiscussionTest extends WebTestCase
                         'member' => $members[4],
                         'seen' => false,
                     ]
-                ]
+                ],
+                'email' => $members[0]->getEmail(),
+                'username' => $members[0]->getUsername(),
+                'userIdentifier' => $members[0]->getUserIdentifier(),
             ]),
             DiscussionRepository::parse([
                 'id' => '19a5b0da-0afc-41b2-8bed-fbe84c3b4450',
@@ -109,7 +118,10 @@ class PaginateDiscussionTest extends WebTestCase
                         'member' => $members[1],
                         'seen' => false,
                     ]
-                ]
+                ],
+                'email' => $members[0]->getEmail(),
+                'username' => $members[0]->getUsername(),
+                'userIdentifier' => $members[0]->getUserIdentifier(),
             ]),
             DiscussionRepository::parse([
                 'id' => 'e0dd4695-68e3-43a1-b415-5d12c30003d1',
@@ -123,7 +135,10 @@ class PaginateDiscussionTest extends WebTestCase
                         'member' => $members[2],
                         'seen' => false,
                     ]
-                ]
+                ],
+                'email' => $members[0]->getEmail(),
+                'username' => $members[0]->getUsername(),
+                'userIdentifier' => $members[0]->getUserIdentifier(),
             ]),
             DiscussionRepository::parse([
                 'id' => '6f0d2c5b-4135-4ec0-809f-ff75def4f78e',
@@ -137,7 +152,10 @@ class PaginateDiscussionTest extends WebTestCase
                         'member' => $members[3],
                         'seen' => false,
                     ]
-                ]
+                ],
+                'email' => $members[0]->getEmail(),
+                'username' => $members[0]->getUsername(),
+                'userIdentifier' => $members[0]->getUserIdentifier(),
             ]),
             DiscussionRepository::parse([
                 'id' => '7324b546-a5b3-46b6-a5ab-832e9b1dc630',
@@ -151,7 +169,10 @@ class PaginateDiscussionTest extends WebTestCase
                         'member' => $members[4],
                         'seen' => false,
                     ]
-                ]
+                ],
+                'email' => $members[0]->getEmail(),
+                'username' => $members[0]->getUsername(),
+                'userIdentifier' => $members[0]->getUserIdentifier(),
             ]),
             DiscussionRepository::parse([
                 'id' => '9468846c-4cce-4567-aab5-d961e2684e3a',
@@ -169,7 +190,10 @@ class PaginateDiscussionTest extends WebTestCase
                         'member' => $members[3],
                         'seen' => false,
                     ]
-                ]
+                ],
+                'email' => $members[0]->getEmail(),
+                'username' => $members[0]->getUsername(),
+                'userIdentifier' => $members[0]->getUserIdentifier(),
             ]),
             DiscussionRepository::parse([
                 'id' => 'b6b2de3a-f6ef-4679-8892-289f2615eedb',
@@ -187,7 +211,10 @@ class PaginateDiscussionTest extends WebTestCase
                         'member' => $members[4],
                         'seen' => false,
                     ]
-                ]
+                ],
+                'email' => $members[0]->getEmail(),
+                'username' => $members[0]->getUsername(),
+                'userIdentifier' => $members[0]->getUserIdentifier(),
             ]),
             DiscussionRepository::parse([
                 'id' => 'e0b355d8-b85c-4c6b-98bf-ae531064e713',
@@ -205,7 +232,10 @@ class PaginateDiscussionTest extends WebTestCase
                         'member' => $members[4],
                         'seen' => false,
                     ]
-                ]
+                ],
+                'email' => $members[0]->getEmail(),
+                'username' => $members[0]->getUsername(),
+                'userIdentifier' => $members[0]->getUserIdentifier(),
             ]),
             DiscussionRepository::parse([
                 'id' => '9a05df87-dbd1-44d1-9ffe-c244080075eb',
@@ -227,7 +257,10 @@ class PaginateDiscussionTest extends WebTestCase
                         'member' => $members[4],
                         'seen' => false,
                     ]
-                ]
+                ],
+                'email' => $members[0]->getEmail(),
+                'username' => $members[0]->getUsername(),
+                'userIdentifier' => $members[0]->getUserIdentifier(),
             ])];
         return [
             'members' => $members,
@@ -271,7 +304,7 @@ class PaginateDiscussionTest extends WebTestCase
     public function provideData(): \Generator
     {
         $data = self::data();
-        yield [$data['members'][0], [], 10, 1];
+        yield [$data['members'][0], [], 10, 0];
         yield [$data['members'][0], [], 1, 0, 2];
         yield [$data['members'][1], [$data['discussions'][0]], 4, 4];
         yield [$data['members'][2], [$data['discussions'][0]], 5, 5];

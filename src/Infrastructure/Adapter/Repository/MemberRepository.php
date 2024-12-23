@@ -4,6 +4,7 @@ namespace App\Infrastructure\Adapter\Repository;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
+use http\Exception\RuntimeException;
 use Messenger\Domain\Entity\Member;
 use Messenger\Domain\Gateway\MemberGateway;
 
@@ -35,7 +36,6 @@ class MemberRepository implements MemberGateway
             $row['userIdentifier'] ?? $row['useridentifier'],
             $row['username']
         );
-
     }
 
     /**

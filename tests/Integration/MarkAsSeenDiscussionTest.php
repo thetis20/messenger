@@ -41,7 +41,10 @@ class MarkAsSeenDiscussionTest extends WebTestCase
                         'member' => $members[1],
                         'seen' => false,
                     ]
-                ]
+                ],
+                'email' => $members[0]->getEmail(),
+                'username' => $members[0]->getUsername(),
+                'userIdentifier' => $members[0]->getUserIdentifier(),
             ])
         ];
         return [

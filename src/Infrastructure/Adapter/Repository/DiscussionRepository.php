@@ -27,9 +27,11 @@ class DiscussionRepository implements DiscussionGateway
         $queryBuilder = $this->conn->createQueryBuilder();
         $queryBuilder->insert('discussions')->values([
             'id' => ':id',
-            'name' => ':name'])
+            'name' => ':name',
+            'author_email' => ':author_email'])
             ->setParameter('id', $discussion->getId())
             ->setParameter('name', $discussion->getName())
+            ->setParameter('author_email', $discussion->getAuthor()->getEmail())
             ->executeStatement();
         $this->_updateDiscussionMembers($discussion);
     }
@@ -112,8 +114,9 @@ class DiscussionRepository implements DiscussionGateway
     public function findBy(array $filters, array $options = []): array
     {
         $qb = $this->generateSelectQueryBuilder($filters)
-            ->groupBy('d.id', 'd.name')
-            ->select('d.id', 'd.name');
+            ->join('d', 'members', 'a', 'a.email = d.author_email')
+            ->groupBy('d.id', 'd.name', 'a.email', 'a.username', 'a.userIdentifier')
+            ->select('d.id', 'd.name', 'a.email', 'a.username', 'a.userIdentifier');
 
         if (isset($options['limit'])) {
             $qb->setMaxResults($options['limit']);
@@ -133,12 +136,15 @@ class DiscussionRepository implements DiscussionGateway
             ->setParameter('discussions', array_map(function (array $row) {
                 return $row['id'];
             }, $rows), ArrayParameterType::STRING)
-            ->select('*')
+            ->select('discussion_id', 'seen', 'm.email as email', 'm.username as username', 'm.userIdentifier as userIdentifier')
             ->fetchAllAssociative();
         foreach ($rows as $row) {
             $array[$row['id']] = [
                 'id' => $row['id'],
                 'name' => $row['name'],
+                'email' => $row['email'],
+                'username' => $row['username'],
+                'userIdentifier' => $row['useridentifier'],
                 'discussionMembers' => []
             ];
         }
@@ -151,7 +157,15 @@ class DiscussionRepository implements DiscussionGateway
     }
 
     /**
-     * @param array{id: string|Uuid,name: string, discussionMembers: array<array>}|null $row
+     * @param array{
+     *     id: string|Uuid,
+     *     name: string,
+     *     discussionMembers: array<array>,
+     *     email: string,
+     *     useridentifier: ?string,
+     *     userIdentifier: ?string,
+     *     username: string,
+     * }|null $row
      * @return Discussion|null
      */
     static public function parse(?array $row): ?Discussion
@@ -162,7 +176,7 @@ class DiscussionRepository implements DiscussionGateway
         if (!$row['id'] instanceof Uuid) {
             $row['id'] = new Uuid($row['id']);
         }
-        $discussion = new Discussion($row['id'], $row['name']);
+        $discussion = new Discussion(MemberRepository::parse($row), $row['id'], $row['name']);
         foreach ($row['discussionMembers'] as $item) {
             if (!isset($item['member'])) {
                 $item['member'] = MemberRepository::parse($item);

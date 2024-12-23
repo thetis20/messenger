@@ -47,7 +47,10 @@ class MessageRepositoryTest extends KernelTestCase
                     'member' => $members[1],
                     'seen' => false,
                 ]
-            ]
+            ],
+            'email' => $members[0]->getEmail(),
+            'username' => $members[0]->getUsername(),
+            'userIdentifier' => $members[0]->getUserIdentifier(),
         ])];
         $messages = [MessageRepository::parse([
             'id' => '006fa199-1b70-4942-8333-29b6de1861ff',

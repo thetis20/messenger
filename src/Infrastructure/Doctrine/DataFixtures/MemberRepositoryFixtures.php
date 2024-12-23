@@ -2,11 +2,8 @@
 
 namespace DataFixtures;
 
-use App\Infrastructure\Adapter\Repository\DiscussionRepository;
 use App\Infrastructure\Adapter\Repository\MemberRepository;
-use App\Infrastructure\Adapter\Repository\MessageRepository;
 use App\Tests\Infrastructure\MemberRepositoryTest;
-use App\Tests\Integration\PaginateDiscussionTest;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
